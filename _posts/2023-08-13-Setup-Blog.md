@@ -36,7 +36,18 @@ With this setup done, we are ready to start writing our first article. My templa
 
 The Inforation required might vary with your template. Now we can simply write the blog post following the mark down syntax, which in my opinion is the greatest advantage of this framework, because it is super easy. One very good cheat sheet for mark down notation is [markdownguide](https://www.markdownguide.org/cheat-sheet/).
 
-With this setup done, we can push our changes from the local machine to github. 
+With this setup done, we can push our changes from the local machine to github. Using Visual Studio this is very easy. Simply commit your changes:
+![commit](/img/posts/2023-08-13-Setup-Blog/commit.jpg)
+And sync your local repo with github (aka push the updates):
+![sync](/img/posts/2023-08-13-Setup-Blog/sync.jpg)
+Now you need to wait for a few seconds and can check out the updates on github and get the link to your blog under settings->pages. 
+
+Congratulations. You just created your first blog and article.
+
+## Adding Formulas
+Work in Progress
+
+
 
 
 
