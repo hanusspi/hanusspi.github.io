@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-09-26T17:27:25+02:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">My Blog</title><subtitle>A Blog over my it interests</subtitle><author><name>Hans Nusspickel</name></author><entry><title type="html">Setup a Blog wit Github Pages and Jekyll</title><link href="http://localhost:4000/2023/08/13/Setup-Blog.html" rel="alternate" type="text/html" title="Setup a Blog wit Github Pages and Jekyll" /><published>2023-08-13T00:00:00+02:00</published><updated>2023-08-13T00:00:00+02:00</updated><id>http://localhost:4000/2023/08/13/Setup-Blog</id><content type="html" xml:base="http://localhost:4000/2023/08/13/Setup-Blog.html"><![CDATA[<h2 id="introduction">Introduction</h2>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-09-26T17:33:05+02:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">My Blog</title><subtitle>A Blog over my it interests</subtitle><author><name>Hans Nusspickel</name></author><entry><title type="html">Setup a Blog wit Github Pages and Jekyll</title><link href="http://localhost:4000/2023/08/13/Setup-Blog.html" rel="alternate" type="text/html" title="Setup a Blog wit Github Pages and Jekyll" /><published>2023-08-13T00:00:00+02:00</published><updated>2023-08-13T00:00:00+02:00</updated><id>http://localhost:4000/2023/08/13/Setup-Blog</id><content type="html" xml:base="http://localhost:4000/2023/08/13/Setup-Blog.html"><![CDATA[<h2 id="introduction">Introduction</h2>
 <p>Hello and Welcome to my first post on this very new blog.</p>
 
 <p>Today I want to take a closer look at the setup of this blog. As my blog will grow, I will add new topics related to the setup of additional features which I am using here. 
@@ -60,4 +60,6 @@ And with this little addidion we can write Latexformulas in Markdown using only 
 
 \[y = x^2\]
 
-\[x = \frac{4}{8}\]]]></content><author><name>Hans Nusspickel</name></author><summary type="html"><![CDATA[Work in Progress]]></summary></entry></feed>
+\[x = \frac{4}{8}\]
+
+<p>okay, some more text</p>]]></content><author><name>Hans Nusspickel</name></author><summary type="html"><![CDATA[Work in Progress]]></summary></entry></feed>
