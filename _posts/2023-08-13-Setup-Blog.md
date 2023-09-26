@@ -45,8 +45,14 @@ Now you need to wait for a few seconds and can check out the updates on github a
 Congratulations. You just created your first blog and article.
 
 ## Adding Formulas
-Work in Progress
+Now lets add some formulas to the blog. For that, as any good student i want to use latex notation. And with the help of mathjax and adding a few simple lines of code at the bottom of the "default.html" layout  
+`---`  
+`<script type="text/javascript" async src=!["https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML"](https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML)>`
 
+`</script>`
+
+`---` 
+And with this little addidion we can write Latexformulas in Markdown using only the "$" around the normal "$" signs of the default latex formula sytle. Turning $a=b+c$ into $$a=b+c$$. And that is all there is to it.
 
 
 
