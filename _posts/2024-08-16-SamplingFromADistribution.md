@@ -103,7 +103,7 @@ b_post = b_prior + tails
 x = np.linspace(0, 1, 100)
 {% endhighlight %}
 
-![Imagetext](img/posts/2024-08-16-SamplingFromADistribution/samplingFromDistr.png)
+<!---![Imagetext](img/posts/2024-08-16-SamplingFromADistribution/samplingFromDistr.png)-->
 
 # 7. Applications of Sampling
 
