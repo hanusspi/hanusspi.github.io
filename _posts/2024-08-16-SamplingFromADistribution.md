@@ -88,7 +88,7 @@ plt.show()
 
 {% endhighlight %}
 
-![Imagetext](img/posts/2024-08-16-SamplingFromADistribution/samplingFromDistr.png)
+![Imagetext](img/posts/2024-08-16-SamplingFromADistribution/samplingFromDistr.jpg)
 
 # 6. Applications of Sampling
 
