@@ -1,61 +1,91 @@
 ---
 layout: post
-title: "Generating Samples from a Probability Distribution "
-subtitle: "Quick Tutorial for setup and deployment of a personal free blog."
+title: "Sampling from a Distribution "
+subtitle: "Understanding Sampling and Its Importance in Bayesian Inference with Python"
 background: '/img/posts/2023-08-13-Introduction-to-ANS/header.jpg'
 ---
-# 1. What is Bayesian Inference?
+# 1. Introduction to Sampling
 
-Bayesian inference is a powerful statistical technique that allows us to update our beliefs about the world as we gather more evidence. Unlike classical (frequentist) approaches, which often focus on fixed parameters and p-values, Bayesian inference provides a probabilistic framework where uncertainty is quantified and incorporated into the analysis.
+Sampling is a foundational concept in statistics and machine learning, and it plays a crucial role in Bayesian inference, particularly in approximate methods. Simply put, sampling involves drawing random values from a probability distribution. These samples can be used to estimate properties of the distribution, such as its mean, variance, or other moments.
 
-At its core, Bayesian inference is built upon Bayes' Theorem:
+In this post, we’ll explore the basics of sampling, its significance in Bayesian inference, and how to perform sampling from a specific distribution using the Inverse Transform Sampling technique.
+# 2. Why Sampling is Important in Inference
 
-$$P(H|D) = \frac{P(D|H)\cdot P(H)}{P(D)}$$
+Sampling is essential in approximate inference methods, especially when dealing with complex models where exact analytical solutions are not feasible. It allows us to estimate expectations, probabilities, and other quantities by drawing samples from the desired distribution.
 
-* $$ P(H|D)$$: The posterior probability, which represents our updated belief in the hypothesis H after observing data $$D$$.
-* $$ P(D|H)$$: The likelihood, the probability of the data given that the hypothesis $$H$$ is true.
-* $$P(H)$$: The prior probability, which represents our initial belief in the hypothesis before seeing the data.
-* $$P(D)$$: The evidence or marginal likelihood, which is the total probability of observing the data under all possible hypotheses.
+This is crucial in many applications, including:
 
-Bayesian inference is particularly useful when dealing with uncertainty, incorporating prior knowledge, and updating beliefs as new information becomes available.
+* Monte Carlo Methods: Approximating expectations using random samples.
+* Bayesian Inference: Sampling from the posterior distribution when it cannot be computed analytically.
+* Optimization: Exploring complex probability landscapes using sampling techniques.
 
-# 2. Exact vs. Approximate Inference
-  
-While Bayesian inference provides a robust framework, it can be computationally challenging. In simple cases, we can calculate the posterior distribution exactly, which is known as exact Bayesian inference. However, in more complex models, calculating the exact posterior distribution becomes intractable due to high-dimensional integrals or complex likelihood functions.
+In this post, we’ll focus on a practical example of sampling from an exponential distribution using Python.
+# 3. The Exponential Distribution
 
-This is where approximate inference comes into play. Approximate methods aim to estimate the posterior distribution without solving it exactly. These methods allow us to perform Bayesian inference in situations where exact methods would be computationally impossible.
+The exponential distribution is a common distribution used to model the time between independent events that happen at a constant average rate. It is characterized by the rate parameter $$λ$$.
 
-Here’s a brief comparison:
+The probability density function (PDF) of the exponential distribution is given by:
+$$f(x;λ)=λe−λxforx≥0$$
 
-   * Exact Inference:
-       - Pros: Provides precise posterior distributions.
-       - Cons: Computationally expensive or impossible for complex models.
+where $$λ$$ is the rate parameter.
 
-   * Approximate Inference:
-       - Pros: Scalable to complex models and large datasets.
-       - Cons: Introduces approximations, which may lead to less precise results.
+The cumulative distribution function (CDF) is the integral of the PDF:
+$$F(x;λ)=1−e−λx$$
 
-This blog series will dive into several approximate methods, but before we do, let’s walk through a simple example of exact Bayesian inference.
+Using the inverse of this CDF, we can sample from the exponential distribution using a uniform random variable.
 
-#  3. Example of Exact Bayesian Inference
-Let’s consider a classic problem in Bayesian statistics: estimating the probability of a coin being biased.
+# 4. Inverse Transform Sampling
 
-Imagine you have a coin, and you're not sure whether it’s fair (i.e., whether it lands heads or tails with equal probability). You decide to model this uncertainty using Bayesian inference.
+Inverse Transform Sampling is a method to generate random samples from a given distribution by inverting its CDF. The steps are:
 
-* Prior Belief: You believe that the coin is probably fair, but you're open to the possibility that it might be biased. This belief can be represented by a Beta distribution, a common choice for modeling probabilities.
+    Generate a uniform random variable $$u∼Uniform(0,1)$$.
+    Compute the inverse of the CDF at uu to obtain the corresponding sample xx.
 
-* Data: You flip the coin 10 times and observe 7 heads.
+For the exponential distribution, the CDF is:
+$$F(x;λ)=1−e−λx$$
 
-* Likelihood: The likelihood function here is binomial since we're counting the number of successes (heads) in a fixed number of trials (10 flips).
+To invert this, solve for xx:
+$$u=1−e−λx$$
+$$e−λx=1−u$$
+$$x=−1λln⁡(1−u)$$
 
-* Posterior Distribution: Using Bayes' Theorem, we update our belief about the fairness of the coin.
+Thus, to generate a sample from the exponential distribution, we can use the formula:
+$$x=−1λln⁡(1−u)$$
 
-Here’s the Python code that performs exact Bayesian inference for this problem:
+# 5. Python Code Example: Sampling from an Exponential Distribution
 
+Here’s how you can implement inverse transform sampling for the exponential distribution in Python:
 {% highlight python linenos %}
+
 import numpy as np
 import matplotlib.pyplot as plt
-from scipy.stats import beta
+
+# Define the rate parameter lambda
+lambda_param = 1.0
+
+# Number of samples
+n_samples = 1000
+
+# Generate uniform random variables
+u = np.random.uniform(0, 1, n_samples)
+
+# Inverse transform sampling to generate samples from the exponential distribution
+samples = -np.log(1 - u) / lambda_param
+
+# Plot the histogram of the samples
+plt.figure(figsize=(10, 6))
+plt.hist(samples, bins=30, density=True, alpha=0.6, color='b')
+plt.title("Sampling from an Exponential Distribution using Inverse Transform Sampling")
+plt.xlabel("Value")
+plt.ylabel("Density")
+
+# Overlay the true exponential distribution
+x = np.linspace(0, 8, 1000)
+plt.plot(x, lambda_param * np.exp(-lambda_param * x), 'r', linewidth=2, label='True PDF')
+plt.legend()
+plt.show()
+
+{% endhighlight %}
 
 # Define prior: Beta(2, 2) (initial belief that the coin is fair)
 a_prior = 2
@@ -72,4 +102,22 @@ b_post = b_prior + tails
 # Generate x values for plotting
 x = np.linspace(0, 1, 100)
 {% endhighlight %}
+
+![Imagetext](img/posts/2024-08-16-SamplingFromADistribution/samplingFromDistr.png)
+
+# 7. Applications of Sampling
+
+Sampling isn’t just a theoretical exercise; it has practical applications in various domains:
+
+* Monte Carlo Methods: Sampling forms the basis of Monte Carlo methods, which are used to estimate integrals, simulate systems, and perform Bayesian inference.
+* Bootstrap Methods: In statistics, sampling is used in bootstrap methods to estimate the sampling distribution of a statistic by resampling from the data.
+* MCMC Algorithms: Markov Chain Monte Carlo methods rely heavily on sampling to explore complex posterior distributions.
+
+These applications show how sampling is a versatile tool in both statistics and machine learning.
+
+# Conclusion and What's Next
+
+In this post, we’ve introduced sampling from the exponential distribution using the Inverse Transform Sampling technique. Sampling is a crucial technique in Bayesian inference, especially when exact solutions are not feasible.
+
+In the next post, we’ll dive into Rejection Sampling, a powerful method for sampling from complex distributions when direct sampling is difficult.
 
