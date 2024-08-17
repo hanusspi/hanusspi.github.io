@@ -39,7 +39,7 @@ Using the inverse of this CDF, we can sample from the exponential distribution u
 Inverse Transform Sampling is a method to generate random samples from a given distribution by inverting its CDF. The steps are:
 
 Generate a uniform random variable $$u∼Uniform(0,1)$$.
-Compute the inverse of the CDF at uu to obtain the corresponding sample xx.
+Compute the inverse of the CDF at uu to obtain the corresponding sample $$x$$.
 
 For the exponential distribution, the CDF is:
 $$F(x;λ)=1−e−λx$$
