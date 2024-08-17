@@ -12,8 +12,8 @@ At its core, Bayesian inference is built upon Bayes' Theorem:
 
 $$P(H|D) = \frac{P(D|H)\cdot P(H)}{P(D)}$$
 
-* $$ P(H|D)$$: The posterior probability, which represents our updated belief in the hypothesis H after observing data $$D$$.
-* $$ P(D|H)$$: The likelihood, the probability of the data given that the hypothesis $$H$$ is true.
+* $$P(H|D)$$: The posterior probability, which represents our updated belief in the hypothesis H after observing data $$D$$.
+* $$P(D|H)$$: The likelihood, the probability of the data given that the hypothesis $$H$$ is true.
 * $$P(H)$$: The prior probability, which represents our initial belief in the hypothesis before seeing the data.
 * $$P(D)$$: The evidence or marginal likelihood, which is the total probability of observing the data under all possible hypotheses.
 
@@ -74,3 +74,21 @@ x = np.linspace(0, 1, 100)
 {% endhighlight %}
 
 ![Imagetext](\img\posts\2024-08-16-Approximate-Inference\exactBayesianInference.png)
+
+# 4. Motivation for Approximate Inference
+
+While the above example was simple, imagine trying to apply exact Bayesian inference to a model with thousands of parameters or complex data structures. In these cases, computing the exact posterior distribution might require solving high-dimensional integrals, which is often infeasible.
+
+This is where approximate inference methods come into play. These methods provide ways to estimate the posterior distribution without needing to compute it exactly. In the upcoming posts, we'll explore several key techniques for approximate inference, including:
+
+* Sampling Methods: Techniques like rejection sampling, importance sampling, and Markov Chain Monte Carlo (MCMC).
+* Variational Methods: Approximating the posterior with simpler distributions.
+* Latent Variable Models: Inference in models with hidden variables.
+
+These methods are not just theoretical tools; they are essential for modern machine learning and data science applications, from probabilistic models to deep learning.
+
+# Conclusion:
+
+Bayesian inference is a foundational concept in statistics and machine learning, allowing us to update our beliefs as new data arrives. However, the complexity of real-world problems often necessitates approximate methods. In this blog series, we'll embark on a journey to understand these methods, starting with basic sampling techniques and progressing to more advanced topics like MCMC and variational inference.
+
+Stay tuned for the next post, where we'll dive into the basics of sampling from a distribution!
