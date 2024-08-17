@@ -56,10 +56,41 @@ $$x=−1λln⁡(1−u)$$
 
 Here’s how you can implement inverse transform sampling for the exponential distribution in Python:
 
+{% highlight python linenos %}
 
-<!---![Imagetext](img/posts/2024-08-16-SamplingFromADistribution/samplingFromDistr.png)-->
+import numpy as np
+import matplotlib.pyplot as plt
 
-# 7. Applications of Sampling
+# Define the rate parameter lambda
+lambda_param = 1.0
+
+# Number of samples
+n_samples = 1000
+
+# Generate uniform random variables
+u = np.random.uniform(0, 1, n_samples)
+
+# Inverse transform sampling to generate samples from the exponential distribution
+samples = -np.log(1 - u) / lambda_param
+
+# Plot the histogram of the samples
+plt.figure(figsize=(10, 6))
+plt.hist(samples, bins=30, density=True, alpha=0.6, color='b')
+plt.title("Sampling from an Exponential Distribution using Inverse Transform Sampling")
+plt.xlabel("Value")
+plt.ylabel("Density")
+
+# Overlay the true exponential distribution
+x = np.linspace(0, 8, 1000)
+plt.plot(x, lambda_param * np.exp(-lambda_param * x), 'r', linewidth=2, label='True PDF')
+plt.legend()
+plt.show()
+
+{% endhighlight %}
+
+![Imagetext](img/posts/2024-08-16-SamplingFromADistribution/samplingFromDistr.png)
+
+# 6. Applications of Sampling
 
 Sampling isn’t just a theoretical exercise; it has practical applications in various domains:
 
