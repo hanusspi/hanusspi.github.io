@@ -10,12 +10,12 @@ Bayesian inference is a powerful statistical technique that allows us to update 
 
 At its core, Bayesian inference is built upon Bayes' Theorem:
 
-$$ P(H|D) = \frac{P(D|H)\cdot P(H)}{P(D)}$$
+$$P(H|D) = \frac{P(D|H)\cdot P(H)}{P(D)}$$
 
-* $$P(H|D)$$: The posterior probability, which represents our updated belief in the hypothesis H after observing data D.
-* $$P(D|H)$$: The likelihood, the probability of the data given that the hypothesis H is true.
-* $$P(H)$$: The prior probability, which represents our initial belief in the hypothesis before seeing the data.
-* $$P(D)$$: The evidence or marginal likelihood, which is the total probability of observing the data under all possible hypotheses.
+* a $$P(H|D)$$: The posterior probability, which represents our updated belief in the hypothesis H after observing data D.
+* a $$P(D|H)$$: The likelihood, the probability of the data given that the hypothesis H is true.
+* a $$P(H)$$: The prior probability, which represents our initial belief in the hypothesis before seeing the data.
+* a $$P(D)$$: The evidence or marginal likelihood, which is the total probability of observing the data under all possible hypotheses.
 
 Bayesian inference is particularly useful when dealing with uncertainty, incorporating prior knowledge, and updating beliefs as new information becomes available.
 
@@ -42,13 +42,13 @@ Let’s consider a classic problem in Bayesian statistics: estimating the probab
 
 Imagine you have a coin, and you're not sure whether it’s fair (i.e., whether it lands heads or tails with equal probability). You decide to model this uncertainty using Bayesian inference.
 
-    * Prior Belief: You believe that the coin is probably fair, but you're open to the possibility that it might be biased. This belief can be represented by a Beta distribution, a common choice for modeling probabilities.
+* Prior Belief: You believe that the coin is probably fair, but you're open to the possibility that it might be biased. This belief can be represented by a Beta distribution, a common choice for modeling probabilities.
 
-    * Data: You flip the coin 10 times and observe 7 heads.
+* Data: You flip the coin 10 times and observe 7 heads.
 
-    * Likelihood: The likelihood function here is binomial since we're counting the number of successes (heads) in a fixed number of trials (10 flips).
+* Likelihood: The likelihood function here is binomial since we're counting the number of successes (heads) in a fixed number of trials (10 flips).
 
-    * Posterior Distribution: Using Bayes' Theorem, we update our belief about the fairness of the coin.
+* Posterior Distribution: Using Bayes' Theorem, we update our belief about the fairness of the coin.
 
 Here’s the Python code that performs exact Bayesian inference for this problem:
 
