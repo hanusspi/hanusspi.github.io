@@ -1,7 +1,7 @@
 ---
 layout: post
-title: "Generating Samples from a Probability Distribution "
-subtitle: "Quick Tutorial for setup and deployment of a personal free blog."
+title: "Introduction to Approximate Inference "
+subtitle: "Understanding the Basics of Bayesian Inference and the Need for Approximate Methods"
 background: '/img/posts/2023-08-13-Introduction-to-ANS/header.jpg'
 ---
 # 1. What is Bayesian Inference?
