@@ -55,53 +55,7 @@ $$x=−1λln⁡(1−u)$$
 # 5. Python Code Example: Sampling from an Exponential Distribution
 
 Here’s how you can implement inverse transform sampling for the exponential distribution in Python:
-{% highlight python linenos %}
 
-import numpy as np
-import matplotlib.pyplot as plt
-
-# Define the rate parameter lambda
-lambda_param = 1.0
-
-# Number of samples
-n_samples = 1000
-
-# Generate uniform random variables
-u = np.random.uniform(0, 1, n_samples)
-
-# Inverse transform sampling to generate samples from the exponential distribution
-samples = -np.log(1 - u) / lambda_param
-
-# Plot the histogram of the samples
-plt.figure(figsize=(10, 6))
-plt.hist(samples, bins=30, density=True, alpha=0.6, color='b')
-plt.title("Sampling from an Exponential Distribution using Inverse Transform Sampling")
-plt.xlabel("Value")
-plt.ylabel("Density")
-
-# Overlay the true exponential distribution
-x = np.linspace(0, 8, 1000)
-plt.plot(x, lambda_param * np.exp(-lambda_param * x), 'r', linewidth=2, label='True PDF')
-plt.legend()
-plt.show()
-
-{% endhighlight %}
-
-# Define prior: Beta(2, 2) (initial belief that the coin is fair)
-a_prior = 2
-b_prior = 2
-
-# Data: 7 heads out of 10 flips
-heads = 7
-tails = 3
-
-# Posterior distribution parameters: Beta(a + heads, b + tails)
-a_post = a_prior + heads
-b_post = b_prior + tails
-
-# Generate x values for plotting
-x = np.linspace(0, 1, 100)
-{% endhighlight %}
 
 <!---![Imagetext](img/posts/2024-08-16-SamplingFromADistribution/samplingFromDistr.png)-->
 
