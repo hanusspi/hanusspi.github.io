@@ -23,9 +23,9 @@ function sayHello(name) {
 }
 ```
 
-{% highlight html linenos %}
+{% highlight javascript linenos %}
 
-	function sayHello(name) {
+function sayHello(name) {
   if (!name) {
     console.log('Hello World');
   } else {
