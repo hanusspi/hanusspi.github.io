@@ -23,3 +23,15 @@ function sayHello(name) {
 }
 ```
 
+{% highlight html linenos %}
+
+	function sayHello(name) {
+  if (!name) {
+    console.log('Hello World');
+  } else {
+    console.log(`Hello ${name}`);
+  }
+}
+
+{% endhighlight %}
+
