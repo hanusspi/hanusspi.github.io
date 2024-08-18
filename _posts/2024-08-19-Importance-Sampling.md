@@ -30,3 +30,5 @@ $$ \simeq \frac{1}{L} \sum_{l=1}^L \frac{p(z^{(l)})}{q(z^{(l)})} f(z^{(l)})$$
 
 where $$ \frac{p(z^{(l)})}{q(z^{(l)})} $$ is considered the importance weight.
 
+![Imagetext](img/posts/2024-08-19-Importance-Sampling.md/importanceSamplingIdea.jpg)
+
