@@ -1,32 +1,34 @@
 ---
 layout: post
-title: "Rejection Sampling: A Powerful Technique for Sampling from Complex Distributions"
-subtitle: "Understanding Rejection Sampling and Its Applications in Bayesian Inference with Python"
+title: "Rejection Sampling"
+subtitle: "Understanding Rejection Sampling with Python Demonstration"
 background: '/img/posts/2023-08-13-Introduction-to-ANS/header.jpg'
 ---
 # 1. Introduction to Rejection Sampling
 
-When dealing with complex probability distributions, direct sampling can be difficult or even impossible. This is where Rejection Sampling comes in—a simple yet powerful technique that allows us to sample from a complex distribution by leveraging a simpler distribution.
+When dealing with complex probability distributions $$p(z)$$, direct sampling can be difficult or even impossible. This is where we can use Rejection Sampling, which allows us to sample from a complex distribution with the aid of a proposal distribution, that we can evaluate.
 
-Rejection sampling is especially useful in Bayesian inference when dealing with non-standard distributions that don't have a straightforward method for drawing samples. In this post, we'll explore the concept of rejection sampling, how it works, and how to implement it in Python.
+Rejection sampling is especially useful in Bayesian inference when dealing with non-standard distributions that don't have a straightforward method for drawing samples. In this post, we'll explore the concept of rejection sampling.
 
 # 2. Why Rejection Sampling?
 
 Rejection sampling is used when:
 
-* Direct Sampling is Difficult: When you can't easily sample from the target distribution, rejection sampling provides an alternative method.
+* Direct Sampling is Difficult: When we can't easily sample from the target distribution, rejection sampling provides an alternative method.
 
-* Target Distribution is Known Up to a Constant: Often, the target distribution is known only up to a normalizing constant, making it hard to sample directly. Rejection sampling circumvents this by sampling from a simpler distribution.
-
-* Flexibility: Rejection sampling can be applied to a wide range of distributions, making it a versatile tool in Bayesian inference and other areas of statistics and machine learning.
+* Target Distribution is Known Up to a Constant: To perform rejection sampling, we need to be able to evaluate the target distribution to some normalization factor $$Z_p$$
+$$p(z) = \frac{1}{Z_p}\tilde{p}(z)$$
+Preferably with very little effort.
 
 # 3. How Rejection Sampling Works
 
-The basic idea of rejection sampling is to sample from a proposal distribution and then "reject" or "accept" samples based on how likely they are under the target distribution.
+The idea of rejection sampling is to sample from a proposal distribution and then "reject" or "accept" samples based on how likely they are under the target distribution.
 
-Here's a step-by-step breakdown:
+![Imagetext](/img/posts/2024-08-17-RejectionSampling/rejectionIdea.jpg)
 
-1. Choose a Proposal Distribution: Select a proposal distribution $$q(x)$$ that is easy to sample from and that roughly covers the shape of the target distribution $$p(x)$$. The proposal distribution should be scaled by a constant $$M$$, such that $$Mq(x)$$ upper-bounds $$p(x)$$.
+Let's break it down into simple steps:
+
+1. Choose a Proposal Distribution: Select a proposal distribution $$q(z)$$ that is easy to sample from and that roughly covers the shape of the target distribution $$\tilde{p}(z)$$. The proposal distribution should be scaled by a constant $$k$$, such that $$\forall z: kq(x) \geq \tilde{p}(z)$$.
 
 2. Generate a Sample: Draw a sample $$x$$ from the proposal distribution $$q(x)$$.
 
