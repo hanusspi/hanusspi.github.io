@@ -32,7 +32,7 @@ Let's break it down into simple steps:
 
 2. Generate a Sample: Draw a sample $$z$$ from the proposal distribution $$q(z)$$.
 
-3. Generate a Uniform Random Variable: Draw a uniform random variable $$u$$ from $$\operatrname{Uniform}(0,1)$$.
+3. Generate a Uniform Random Variable: Draw a uniform random variable $$u$$ from $$\operatorname{Uniform}(0,1)$$.
 
 4. Acceptance Criterion: Accept the sample $$z$$ if $$u\leq\frac{\tilde{p}(z)}{kq(z)}$$​. If not, reject the sample and go back to step 2.
 
