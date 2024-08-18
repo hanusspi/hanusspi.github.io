@@ -30,11 +30,11 @@ Let's break it down into simple steps:
 
 1. Choose a Proposal Distribution: Select a proposal distribution $$q(z)$$ that is easy to sample from and that roughly covers the shape of the target distribution $$\tilde{p}(z)$$. The proposal distribution should be scaled by a constant $$k$$, such that $$\forall z: kq(x) \geq \tilde{p}(z)$$.
 
-2. Generate a Sample: Draw a sample $$x$$ from the proposal distribution $$q(x)$$.
+2. Generate a Sample: Draw a sample $$z$$ from the proposal distribution $$q(z)$$.
 
-3. Generate a Uniform Random Variable: Draw a uniform random variable $$u$$ from $$Uniform(0,1)$$.
+3. Generate a Uniform Random Variable: Draw a uniform random variable $$u$$ from $$\operatrname{Uniform}(0,1)$$.
 
-4. Acceptance Criterion: Accept the sample $$x$$ if $$u\leq\frac{p(x)}{Mq(x)}$$​. If not, reject the sample and go back to step 2.
+4. Acceptance Criterion: Accept the sample $$z$$ if $$u\leq\frac{\tilde{p}(z)}{kq(z)}$$​. If not, reject the sample and go back to step 2.
 
 5. Repeat: Continue the process until you have enough accepted samples.
 
@@ -42,14 +42,16 @@ The accepted samples will be approximately distributed according to the target d
 
 # 4. Example: Rejection Sampling from a Gaussian Mixture Model
 
-Let's consider an example where we want to sample from a Gaussian Mixture Model (GMM), which is a combination of multiple Gaussian distributions. This is a common scenario where rejection sampling is useful because direct sampling from a GMM can be challenging.
+Let's now consider an example where we want to sample from a Gaussian Mixture Model (GMM), which is a combination of multiple Gaussian distributions as a demonstration.
 
 We'll use a simple GMM composed of two Gaussian distributions.
 
 The target distribution $$p(x)$$ is a mixture of two Gaussian distributions:
 $$p(x)=0.3\cdot \mathcal{N}(x;−2,0.5^2)+0.7\cdot \mathcal{N}(x;2,1^2)$$
 
-We will use a simple normal distribution as the proposal distribution q(x)q(x).
+The normalization factor $$Z_p$$ in this case is 1, since we can evaluate this function precisly.
+
+We will use a simple normal distribution as the proposal distribution $$q(x)$$.
 
 5. Python Code Example: Rejection Sampling
 
@@ -100,18 +102,13 @@ plt.show()
 
 ![Imagetext](/img/posts/2024-08-17-RejectionSampling/rejectionSampling.jpg)
 
-# 5. Applications and Limitations of Rejection Sampling
+# 5. Limitations of Rejection Sampling
 
-Applications:
+Now that we gained a rough understanding of how rejection sampling works, we can see that it can be very usefull, but there are also some obvious limitations:
 
-* Bayesian Inference: Rejection sampling is used to sample from posterior distributions that are difficult to sample directly.
-* Monte Carlo Methods: Rejection sampling is a fundamental technique in Monte Carlo simulations, where samples from complex distributions are needed.
-* Importance Sampling: Rejection sampling can be combined with importance sampling to improve efficiency in certain scenarios.
-
-Limitations:
-
-* Efficiency: Rejection sampling can be inefficient if the proposal distribution doesn't closely match the target distribution. The more samples you reject, the longer it takes to generate enough accepted samples.
-* Dimensionality: In high-dimensional spaces, finding a suitable proposal distribution that covers the target distribution well can be challenging, leading to a high rejection rate.
+* Efficiency: Rejection sampling can be inefficient if the proposal distribution doesn't closely match the target distribution. The more samples we reject, the longer it takes to generate enough accepted samples.
+* Parameters: Rejection Sampling cannot be simply used. For every usecase we need to find a good matching proposal distribution, which in itself can be very challenging or risk loosing alot of efficiency.
+* Dimensionality: In high-dimensional spaces, finding a suitable proposal distribution that covers the target distribution well can be even more challenging, leading to high rejection rates.
 
 # Conclusion and What's Next
 
