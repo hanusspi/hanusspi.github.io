@@ -13,6 +13,7 @@ At its core, Bayesian inference is built upon Bayes' Theorem:
 $$P(H|D) = \frac{P(D|H)\cdot P(H)}{P(D)}$$
 
 * $$P(H|D)$$: The posterior probability, which represents our updated belief in the hypothesis H after observing data $$D$$.
+* $$P(H|D)$$: The posterior probability, which represents our updated belief in the hypothesis H after observing data $$D$$.
 * $$P(D|H)$$: The likelihood, the probability of the data given that the hypothesis $$H$$ is true.
 * $$P(H)$$: The prior probability, which represents our initial belief in the hypothesis before seeing the data.
 * $$P(D)$$: The evidence or marginal likelihood, which is the total probability of observing the data under all possible hypotheses.
