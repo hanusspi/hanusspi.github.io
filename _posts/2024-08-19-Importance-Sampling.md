@@ -32,3 +32,24 @@ where $$ \frac{p(z^{(l)})}{q(z^{(l)})} $$ is considered the importance weight.
 
 ![Imagetext](img/posts/2024-08-19-Importance-Sampling.md/importanceSamplingIdea.jpg)
 
+Now we need to consider the typical setting, in which we can only evaluate $$p(z)$$ up to an unkown normalization constant $$p(z) = \tilde{p}(z)/Z_p$$. With $$q(z)$$ we can do the same: $$q(z) =\tilde{q}(z)/Z_q$$. From this we can construct:
+
+$$ \mathbb{E}[f] = \int f(z)p(z) dz = \frac{Z_q}{Z_p} \int f(z)\frac{p(z)}{q(z)}q(z) dz $$
+$$ \simeq \frac{Z_q}{Z_p} \frac{1}{L} \sum_{l=1}^L \tilde{r_l}f(z^{(l)}) $$
+
+with $$\tilde{r_l} = \frac{\tilde{p}(z^{(l)})}{\tilde{q}(z^{(l)})} $$
+
+As you might have noticed, we introduced two constants expressing our uncertaintity in the quality of our sample. These constants are not known, but we only need to know their ratio anyways. This can be done
+
+$$ \frac{Z_q}{Z_p} = \frac{1}{Z_q}\int \tilde{p}(z)dz = \int \frac{\tilde{p}(z^{(l)})}{\tilde{q}(z^{(l)})} q(z)dz \simeq \frac{1}{L} \sum_{l=1}^L \tilde{r_l} $$
+
+and with this we can express the expectancy as
+
+$$ \mathbb{E}[f] \simeq \sum_{l=1}^L w_l f(z^{(l)})
+
+with
+
+$$ w_l = \frac{\tilde{r_l}}{\sum_m{\tilde{r_m}}} = \frac{\frac{\tilde{p}(z^{(l)})}{\tilde{q}(z^{(l)})}}{\sum_m \frac{\tilde{p}(z^{(m)})}{\tilde{q}(z^{(m)})}} $$
+
+With this the first difference to rejection sampling should become obvious. In rejection sampling we were worried about a bad fit and throwing away to many samples. Here we use every sample and give it a weight. In all fairness though, we might keep the sample, but it still could end up getting a weight very close to zero.
+
