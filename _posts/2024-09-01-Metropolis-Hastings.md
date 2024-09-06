@@ -43,8 +43,12 @@ So if the new sample has a higher probability than the previous one, we will acc
 $$z^{(\tau+1)} =  z^*$$
 and if the new sample is not accepted, 
 $$z^{(\tau+1)} =  z^{(\tau)}$$.
-If we compare this to rejection sampling, we discarded rejected samples. Now we still discard samples, but copy accepted samples in return. So there can be multiple copies of a sample. This simpler case is the original Metropolis Algorithm and has the property, that if $$q(z_A|z_B)>0 for all z, the distribution of 
-$$z^{\tau}$$ tends to $$p(z)$$
+If we compare this to rejection sampling, we discarded rejected samples. Now we still discard samples, but copy accepted samples in return. So there can be multiple copies of a sample. This simpler case is the original Metropolis Algorithm and has the property, that if $$q(z_A|z_B)>0 for all 
+$$z$$,
+ the distribution of 
+$$z^{\tau}$$ 
+tends to 
+$$p(z)$$
 as 
 $$\tau \rightarrow \inf$$.
 
@@ -52,7 +56,11 @@ To compensate for non symmetric proposal distributions, we can append to our acc
 
 $$ A(z^*, z^{(\tau)}) = \operatorname{min}\left(1, \frac{\tilde{p}(z^*)q_k(z^{(\tau)}|z^*)}{\tilde{p}^{(\tau)}q_k(z^*|z^{(\tau)})}\right) $$
 
-where k labels the members of the set of possible transitions considered. The evaluation of the acceptance criterion does not require the normalizing constant $$ Z_p$$. And now we can also see, that if $$q_k$$ is symmetrical, Metropolis Hastings becomes the Metropolis Algorithm. 
+where k labels the members of the set of possible transitions considered. The evaluation of the acceptance criterion does not require the normalizing constant 
+$$ Z_p$$.
+And now we can also see, that if 
+$$q_k$$
+is symmetrical, Metropolis Hastings becomes the Metropolis Algorithm. 
 
 # 3. Implementation in Python
 
