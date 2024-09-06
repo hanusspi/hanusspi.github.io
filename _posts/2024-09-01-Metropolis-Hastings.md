@@ -44,7 +44,9 @@ $$ \tilde{p}(z^*) \geq \tilde{p}^{(\tau)} $$
 $$z^{(\tau+1)} =  z^*$$
 and if the new sample is not accepted, 
 $$z^{(\tau+1)} =  z^{(\tau)}$$
-. If we compare this to rejection sampling, we discarded rejected samples. Now we still discard samples, but copy accepted samples in return. So there can be multiple copies of a sample. This simpler case is the original Metropolis Algorithm and has the property, that if $$q(z_A|z_B)>0 for all 
+. If we compare this to rejection sampling, we discarded rejected samples. Now we still discard samples, but copy accepted samples in return. So there can be multiple copies of a sample. This simpler case is the original Metropolis Algorithm and has the property, that if 
+$$q(z_A|z_B)>0$$
+ for all 
 $$z$$
 , the distribution of 
 $$z^{\tau}$$ 
