@@ -24,41 +24,43 @@ Now at each time step, we generate a candidate sample from the proposal distribu
 # 2. Metropolis-Hastings Algorighm
 The idea of MCMC is that the chainis a sequence of states created through iterative estimations of new states. A state is a set of parameters of an analytic model over which MCMC is iterating in order to maximize the posterior. For a markov chain, the markov property has to hold:
 $$P[S|S'] = P[S|S',S'']$$
-So the probability of state 
+. So the probability of state 
 $$S$$
 only depends on the previous state $$S'$$ and not on any other earlier visited states. In the Bayesian context, the accpetance of a new state often involves comparing the likelihood of the current state, with respect to a uniformly sampled acceptance threshold. This might sound a bit confusing in the beginning but will become clearer in the code.
 
 For now lets assume, that the proposal distribution is symmetric, therefore 
 $$q(z_A|z_B) = q(z_B|z_A)$$
 holds. Now we need to determine the probability with which we accept a new candidate sample 
-$$z^*$$:
+$$z^*$$
+:
 
 $$A(z^*, z^{(\tau)}) = \operatorname{min}\left(1, \frac{\tilde{p}(z^*)}{\tilde{p}^{(\tau)}}\right)$$
 
 Now we can again sample $$u$$ from a  uniform distribution and accept the sample, if 
 $$ A(z^*, z^{(\tau)}) > u$$
 . What we can already note is, that the new candiate sample will always be accepted if 
-$$ \tilde{p}(z^*) \geq \tilde{p}^{(\tau)} $$.
-So if the new sample has a higher probability than the previous one, we will accpet it. But every now and then the algorithm also accpets samples with lower probability. For the next step this means, that if the new sample is accepted, that 
+$$ \tilde{p}(z^*) \geq \tilde{p}^{(\tau)} $$
+. So if the new sample has a higher probability than the previous one, we will accpet it. But every now and then the algorithm also accpets samples with lower probability. For the next step this means, that if the new sample is accepted, that 
 $$z^{(\tau+1)} =  z^*$$
 and if the new sample is not accepted, 
-$$z^{(\tau+1)} =  z^{(\tau)}$$.
-If we compare this to rejection sampling, we discarded rejected samples. Now we still discard samples, but copy accepted samples in return. So there can be multiple copies of a sample. This simpler case is the original Metropolis Algorithm and has the property, that if $$q(z_A|z_B)>0 for all 
-$$z$$,
- the distribution of 
+$$z^{(\tau+1)} =  z^{(\tau)}$$
+. If we compare this to rejection sampling, we discarded rejected samples. Now we still discard samples, but copy accepted samples in return. So there can be multiple copies of a sample. This simpler case is the original Metropolis Algorithm and has the property, that if $$q(z_A|z_B)>0 for all 
+$$z$$
+, the distribution of 
 $$z^{\tau}$$ 
 tends to 
 $$p(z)$$
 as 
-$$\tau \rightarrow \inf$$.
+$$\tau \rightarrow \inf$$
+.
 
 To compensate for non symmetric proposal distributions, we can append to our acceptance probability and define it with: 
 
 $$ A(z^*, z^{(\tau)}) = \operatorname{min}\left(1, \frac{\tilde{p}(z^*)q_k(z^{(\tau)}|z^*)}{\tilde{p}^{(\tau)}q_k(z^*|z^{(\tau)})}\right) $$
 
 where k labels the members of the set of possible transitions considered. The evaluation of the acceptance criterion does not require the normalizing constant 
-$$ Z_p$$.
-And now we can also see, that if 
+$$ Z_p$$
+. And now we can also see, that if 
 $$q_k$$
 is symmetrical, Metropolis Hastings becomes the Metropolis Algorithm. 
 
