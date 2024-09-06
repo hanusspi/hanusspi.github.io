@@ -122,10 +122,10 @@ plt.axhline(y=0, color='black', linestyle='--')
 plt.legend()
 plt.show()
 {% endhighlight %}
-![Imagetext](img\posts\2024-08-19-Importance-Sampling.md\importance_sampling.jpg)
+![Imagetext](\img\posts\2024-08-19-Importance-Sampling.md\importance_sampling.jpg)
 
 So, what is happening here. First we define our target function, which is a Mixture of Gaussians, then our proposal distribution, which is a simple normal distribution and $$f(x)$$ is a sigmoid function. Then we generate the samples and calculate the corresponding weights and their normalization factor and get the following expectancy for the importance sampled expectancy: 0.413 and using numerical integration we get an "exact" value of:  0.451, which seems to be a pretty good guess. But moving the mean of our propsal distribution by 2 to the left turns our estimate already to 0.705 and keeping the mean at 3 and changing the variance to 1 turns the expactancy to -0.05. If we visulize the functions, we can also see why:
-![Imagetext](img\posts\2024-08-19-Importance-Sampling.md\importance_sampling_bad.jpg)
+![Imagetext](\img\posts\2024-08-19-Importance-Sampling.md\importance_sampling_bad.jpg)
 The proposal distribution only covers the low part of the target distribution leading to the bad result. 
 
 # 4. Conclusion and What's Next
