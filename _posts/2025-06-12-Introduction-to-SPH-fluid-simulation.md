@@ -35,7 +35,7 @@ Currently we managed to describe the properties of what we want to simulate with
 
 Having done the first step, we will use a trick to use this for discretization using the Dirac-Delta Distribution. This distribution has the simple characteristic, that it is always zero, except at the point x where it jumps to infinity. Formally this looks like:
 
-$$\delta(x)=\begin{cases}\infty&\mathrm{if~}x=0 \\ 0&\mathrm{otherwise}&\end{cases}$$
+$$\delta(x)=\begin{cases}\infty&\mathrm{if~}x=0 \\0&\mathrm{otherwise}&\end{cases}$$
 
 $$\int_{-\infty}^{+\infty}\delta(x)dx=1$$
 
