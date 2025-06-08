@@ -54,3 +54,58 @@ The kernel approximation becomes:
 $$f(\mathbf{x}) = \int_{\Omega} f(\mathbf{x}^*) \delta(\mathbf{x} - \mathbf{x}^*) \, d\mathbf{x}^*$$
 
 $$\approx \int_{D_{\mathbf{x}}} f(\mathbf{x}^*) W(\mathbf{x} - \mathbf{x}^*, h) \, d\mathbf{x}^*$$
+
+\frac{D\mathbf{v}}{Dt} &= -\frac{1}{\rho}\nabla p + \nu\nabla^2\mathbf{v} + \frac{\mathbf{f}}{\rho} \\
+\text{where:} \quad &  \\
+\frac{D\mathbf{v}}{Dt} &= \text{material derivative of velocity} \\
+-\frac{1}{\rho}\nabla p &= \text{pressure gradient acceleration} \\
+\nu\nabla^2\mathbf{v} &= \text{viscous acceleration} \\
+\frac{\mathbf{f}}{\rho} &= \text{external force acceleration}
+\end{align}$$
+
+### SPH Kernel Approximation (Multi-line)
+$$\begin{align}
+f(\mathbf{x}) &= \int_{\Omega} f(\mathbf{x}^*) \delta(\mathbf{x} - \mathbf{x}^*) \, d\mathbf{x}^* \\
+&\approx \int_{D_{\mathbf{x}}} f(\mathbf{x}^*) W(\mathbf{x} - \mathbf{x}^*, h) \, d\mathbf{x}^* \\
+&\approx \sum_{j} \frac{m_j}{\rho_j} f(\mathbf{x}_j) W(\mathbf{x} - \mathbf{x}_j, h)
+\end{align}$$
+
+### Incompressibility Condition
+$$\begin{align}
+\frac{D\rho}{Dt} &= 0 \\
+\Leftrightarrow \quad \nabla \cdot \mathbf{v} &= 0
+\end{align}$$
+
+### Kernel Function Properties
+$$\begin{align}
+\int_{\Omega} W(\mathbf{x} - \mathbf{x}^*, h) \, d\mathbf{x}^* &= 1 \quad \text{(normalization)} \\
+\lim_{h \to 0} W(\mathbf{x} - \mathbf{x}^*, h) &= \delta(\mathbf{x} - \mathbf{x}^*) \quad \text{(delta function property)} \\
+W(\mathbf{x} - \mathbf{x}^*, h) &= 0 \quad \text{for} \quad |\mathbf{x} - \mathbf{x}^*| > kh \quad \text{(compact support)}
+\end{align}$$
+
+## Single Line Examples
+
+The density at position $\mathbf{x}$ is approximated as:
+$$\rho(\mathbf{x}) = \sum_{j} m_j W(\mathbf{x} - \mathbf{x}_j, h)$$
+
+The gradient of a field $f$ is:
+$$\nabla f(\mathbf{x}) \approx \sum_{j} \frac{m_j}{\rho_j} f(\mathbf{x}_j) \nabla W(\mathbf{x} - \mathbf{x}_j, h)$$
+
+## Advanced Formatting
+
+### Piecewise Functions
+$$W(r, h) = \frac{1}{\pi h^2} \begin{cases}
+1 - \frac{3}{2}q^2 + \frac{3}{4}q^3 & \text{if } 0 \leq q < 1 \\
+\frac{1}{4}(2-q)^3 & \text{if } 1 \leq q < 2 \\
+0 & \text{if } q \geq 2
+\end{cases}$$
+
+where $q = \frac{r}{h}$.
+
+### Matrix Notation
+$$\begin{align}
+\mathbf{A} = \begin{pmatrix}
+\frac{\partial^2 p}{\partial x^2} & \frac{\partial^2 p}{\partial x \partial y} \\
+\frac{\partial^2 p}{\partial y \partial x} & \frac{\partial^2 p}{\partial y^2}
+\end{pmatrix}
+\end{align}$$
