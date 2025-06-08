@@ -49,4 +49,6 @@ $$f(\mathbf{x})=\int_\Omega f(\mathbf{x}^*)\delta(\mathbf{x}-\mathbf{x}^*)d\math
 
 $$\approx\int_{D_{\mathbf{x}}}f(\mathbf{x}^*)W(\mathbf{x}-\mathbf{x}^*,h)d\mathbf{x}^*$$
 
-$$\int_{-\infty}^{+\infty}\delta(x)dx=1$$
+$$f(\mathbf{x}) = \int_\Omega f(\mathbf{x}^*) \delta(\mathbf{x} - \mathbf{x}^*) d\mathbf{x}^*$$
+
+$$\approx \int_{D_\mathbf{x}} f(\mathbf{x}^*) W(\mathbf{x} - \mathbf{x}^*, h) d\mathbf{x}^*$$
