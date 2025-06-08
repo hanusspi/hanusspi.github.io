@@ -8,17 +8,17 @@ background: '/img/posts/2023-08-13-Introduction-to-ANS/header.jpg'
 
 # 1. Introduction to Fluid Simulation
 
-One of the more interesting topics in physics based animation is the simulation of water and fluids in general. The relevance of this topic reaches from computer games, like sea of thieves, where a real time simulation of the ocean is relevant, over vfx art for movies, like Avatar Water World to many industrial applications like casting steel.
+One of the more interesting topics in physics based animation is the simulation of water and fluids in general. The relevance of this topic reaches from computer games, like Sea of Thieves, where a real time simulation of the ocean is relevant, over vfx art for movies, like Avatar Water World to many industrial applications like casting steel.
 
-While there is alot of research being done on this topic, I first came into contact with it during a physics based animations lecture and since have worked hard on getting a deeper insight into the topic. Here I want to begin by introducing the fundamentals and then take a dive into some deeper topics, that i am currently interested in.
+While there is alot of research being done on this topic, I first came into contact with it during a physics based animations lecture and have since worked hard on getting a deeper insight into the topic. Here I want to begin by introducing the fundamentals and then take a dive into some deeper topics, that I am currently interested in.
 
-There exist two (and a half) approaches for fluid simulation: the lagrangian particle based one and the euleraian grid based one. Further more there is alot of research going into hyrid models that try to combine the best out of both worlds. For now I will focus on the larangian approach.
+There exist two (and a half) approaches for fluid simulation: the lagrangian particle based one and the euleraian grid based one. Further more there is alot of research going into hyrid models that try to combine the best out of both worlds. For now I will focus on the lagrangian approach.
 
 # 2. Navier Stokes Equation
 
-First, lets think about what charakteristics make a fluid a fluid and especially lets think about water. First of course it can flow freely and will always try to find a postion of lowest energy. Furthermore it is not compressible. So (to an extent) no matter how deep you dive into the ocean, 1 cubic meter of water will always have the same amount of water molecules, no matter hoch high the pressure is. Finally we have some more specific properties like surface tension. 
+First, let's think about what characteristics make a fluid a fluid and especially let's think about water. First of course it can flow freely and will always try to find a postion of lowest energy. Furthermore, it is not compressible. So, (to an extent) no matter how deep you dive into the ocean, 1 cubic meter of water will always have the same amount of water molecules, no matter how high the pressure is. (Very much unlike air, which is very compressible) Finally, we have some more specific properties like surface tension. 
 
-The fundamental aspect of fluid simulation though is maintaining the incompressibility through time. And while this post will have a few formulas i strive to make it as easy and interesting to understand as possible. And I promise in future things will get more programming centric. The incompressibility can simply be described by $$\frac{D \rho}{D t} = 0 \Leftrightarrow \nabla \cdot v = 0$$. $\rho$ denotes the density. The second part implies the same, but we will not use any further. 
+The fundamental aspect of fluid simulation though is maintaining the incompressibility through time. And while this post will have a few formulas, I strive to make it as easy and interesting to understand as possible. And I promise in future things will get more programming centric. The incompressibility can simply be described by $$\frac{D \rho}{D t} = 0 \Leftrightarrow \nabla \cdot v = 0$$. $\rho$ denotes the density. The second part implies the same, but we will not use it any further. 
 
 From this we can derive the navier stokes equation:
 $$ \frac{D\mathbf{v}}{Dt}=-\frac{1}{\rho}\nabla p+\nu\nabla^2\mathbf{v}+\frac{\mathbf{f}}{\rho} $$
@@ -58,7 +58,7 @@ $$W(q) = \alpha \begin{cases}
 0 & \text{if } q \geq 2
 \end{cases}$$
 
-where $q = \frac{\|\mathbf{x}_i - \mathbf{x}_j\|}{h}$ and $\alpha$ is the normalization constant depending on in how many dimensions we run the simulation. 
+where $$q = \frac{\|\mathbf{x}_i - \mathbf{x}_j\|}{h}$$ and $\alpha$ is the normalization constant depending on in how many dimensions we run the simulation. 
 
 Taking a closer look on the relationship between the kernel function and the Dirac Delta identy:
 
@@ -178,7 +178,7 @@ Finally we can put it together and rewrite the continous function into a discret
 
 $$f(\mathbf{x}) \approx \sum_{j} V_j f(\mathbf{x}_j) W(\mathbf{x} - \mathbf{x}_j, h)$$
 
-Now the quantity of f can be simply determined by a sum over its neighborhood in a fixed radius. Doing the neighborhoodsearch in a naiive brute force way is very expensive and scales horably ($$o(n^3)$). But luckily there is some smarter ways to handle this. We will take look into this at a later point, but for the begining we will use a library that does this for us. Using some smart maths, we can now express the density of a particle using:
+Now the quantity of f can be simply determined by a sum over its neighborhood in a fixed radius. Doing the neighborhoodsearch in a naiive brute force way is very expensive and scales horably ($$o(n^3)$$). But luckily there is some smarter ways to handle this. We will take look into this at a later point, but for the begining we will use a library that does this for us. Using some smart maths, we can now express the density of a particle using:
 
 $$\rho_i = \sum_{j} \frac{m_j}{\rho_j} \rho_j W_{ij} = \sum_{j} m_j W_{ij}$$
 
@@ -351,7 +351,7 @@ A mathematical formulation of this is presented in the equation of state (EOS):
 
 $$p_i = \frac{\kappa \rho_0}{\gamma} \left( \left( \frac{\rho_i}{\rho_0} \right)^{\gamma} - 1 \right)$$
 
-where the pressure $p$ of the particle $i$ is dependent on the pressure difference between the rest density $\rho_0$ which is the natural density of water and therefore for us $1000kg/m^3$ and the actual density of the particle. Further more $\gamma, \kappa$ are stifness parameters. For now we will simply set $\kappa$ to 1 giving us $p_i = \kappa (\rho_i - \rho_0). Formulating it like this shows great similarity to a spring force, just defined as a density deviationt imes a stiffness constant.
+where the pressure $$p$$ of the particle $i$ is dependent on the pressure difference between the rest density $$\rho_0$$ which is the natural density of water and therefore for us $$1000kg/m^3$$ and the actual density of the particle. Further more $$\gamma, \kappa$$ are stifness parameters. For now we will simply set $$\kappa$$ to 1 giving us $$p_i = \kappa (\rho_i - \rho_0)$$. Formulating it like this shows great similarity to a spring force, just defined as a density deviationt imes a stiffness constant.
 
 While this gives us the pressure, later on we will also need the direction of the pressure. Therefore it is noteworth to quickly talk about the derivative of our kernel and density calculation. Mathematically the derivative keeps the factors the same and just derives the kernel function itself. This derivative does not preserves linear and angular momentum though, since it is not symmetric. To maintain symmetry and satisfy Newton, we therefore rephrase it as:
 
