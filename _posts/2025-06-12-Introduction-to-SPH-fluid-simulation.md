@@ -35,7 +35,15 @@ Currently we managed to describe the properties of what we want to simulate with
 
 Having done the first step, we will use a trick to use this for discretization using the Dirac-Delta Distribution. This distribution has the simple characteristic, that it is always zero, except at the point x where it jumps to infinity. Formally this looks like:
 
-$$\delta(x)=\begin{cases}\infty&\mathrm{if~}x=0 \\0&\mathrm{otherwise}&\end{cases}$$
+$$\delta(x)=\begin{cases}\infty&\mathrm{if~}x=0 \\ 0&\mathrm{otherwise}&\end{cases}$$
 
 $$\int_{-\infty}^{+\infty}\delta(x)dx=1$$
 
+Given a fucntion $$f:\Omega\to\mathbb{R}^n$$ that maps a position vector $$x$$ in the domain $$\Omega \subset \mathbb{R}^3$$ to a scalar or vector vlaue, it can be rewritten using the Dirac delta identiz:
+
+$$f(\mathbf{x})=\int_\Omega f(\mathbf{x}^*)\delta(\mathbf{x}-\mathbf{x}^*)d\mathbf{x}^*$$
+
+While this does not really help us yet to determine somehow what values/properties our particles have, we can now simple rewrite the Dirac Delta identity using a kernel funcftion. 
+
+$$f(\mathbf{x})&=\int_\Omega f(\mathbf{x}^*)\delta(\mathbf{x}-\mathbf{x}^*)d\mathbf{x}^*$$
+$$&\approx\int_{\mathcal{D}_{\mathbf{x}}}f(\mathbf{x}^*)W(\mathbf{x}-\mathbf{x}^*,h)d\mathbf{x}^*$$
