@@ -34,5 +34,8 @@ First of all we are describing an acceleration. This acceleration has three comp
 Currently we managed to describe the properties of what we want to simulate with a formula. This is a good beginning, but the formula describes something temporal and spacially continous, which we cannot compute. Therefore we inroduce a spatial discretization into finatly many particles. These particles are not really particles (but we call them that for simplicity) but more like probes giving us information about important field values like density and velocity at a position. This form of discretiation makes it a lagrangian viewpoint.
 
 Having done the first step, we will use a trick to use this for discretization using the Dirac-Delta Distribution. This distribution has the simple characteristic, that it is always zero, except at the point x where it jumps to infinity. Formally this looks like:
+
 $$\delta(x)=\begin{cases}\infty&\mathrm{if~}x=0\\0&\mathrm{otherwise}&\end{cases}$$
+
 $$\int_{-\infty}^{+\infty}\delta(x)dx=1$$
+
