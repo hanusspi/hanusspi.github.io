@@ -57,7 +57,145 @@ $$W(q) = \alpha \begin{cases}
 0 & \text{if } q \geq 2
 \end{cases}$$
 
-where $q = \frac{\|\mathbf{x}_i - \mathbf{x}_j\|}{h}$ and $\alpha$ is the normalization constant depending on in how many dimensions we run the simulation. Finally we can put it together and rewrite the continous function into a discrete sum:
+where $q = \frac{\|\mathbf{x}_i - \mathbf{x}_j\|}{h}$ and $\alpha$ is the normalization constant depending on in how many dimensions we run the simulation. 
+
+Taking a closer look on the relationship between the kernel function and the Dirac Delta identy:
+
+<canvas id="chart" width="600" height="400"></canvas>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    
+<script>
+    // Cubic spline kernel (different smoothing lengths)
+    function cubicSpline(r, h) {
+        const q = Math.abs(r) / h;
+        const sigma = 1 / h; // normalization constant (1D)
+        
+        if (q >= 2) return 0;
+        if (q < 1) return sigma * (1 - 1.5 * q * q + 0.75 * q * q * q);
+        return sigma * 0.25 * (2 - q) * (2 - q) * (2 - q);
+    }
+    
+    // X values from -2 to 2
+    const x = [];
+    for (let i = -2; i <= 2; i += 0.02) {
+        x.push(i);
+    }
+    
+    // Different kernel smoothing lengths
+    const kernels = [
+        { h: 0.3, color: 'orange', label: 'h=0.3' },
+        { h: 0.5, color: 'lightgreen', label: 'h=0.5' },
+        { h: 0.7, color: 'cyan', label: 'h=0.7' },
+        { h: 0.9, color: 'blue', label: 'h=0.9' },
+        { h: 1.1, color: 'purple', label: 'h=1.1' }
+    ];
+    
+    const datasets = kernels.map(kernel => ({
+        label: kernel.label,
+        data: x.map(xi => ({ x: xi, y: cubicSpline(xi, kernel.h) })),
+        borderColor: kernel.color,
+        backgroundColor: 'transparent',
+        borderWidth: 3,
+        pointRadius: 0,
+        tension: 0
+    }));
+    
+    // Add Dirac delta approximation (arrow pointing up)
+    datasets.push({
+        label: 'δ(x)',
+        data: [
+            { x: 0, y: 0 },
+            { x: 0, y: 12 }
+        ],
+        borderColor: 'red',
+        backgroundColor: 'transparent',
+        borderWidth: 4,
+        pointRadius: 0,
+        showLine: true
+    });
+    
+    // Add arrowhead for Dirac delta
+    datasets.push({
+        label: '',
+        data: [
+            { x: -0.05, y: 11.5 },
+            { x: 0, y: 12 },
+            { x: 0.05, y: 11.5 }
+        ],
+        borderColor: 'red',
+        backgroundColor: 'red',
+        borderWidth: 3,
+        pointRadius: 0,
+        showLine: true,
+        fill: true
+    });
+    
+    const ctx = document.getElementById('chart').getContext('2d');
+    new Chart(ctx, {
+        type: 'line',
+        data: { datasets },
+        options: {
+            responsive: true,
+            scales: {
+                x: {
+                    type: 'linear',
+                    min: -2,
+                    max: 2,
+                    ticks: { stepSize: 0.5 },
+                    title: {
+                        display: true,
+                        text: 'Distance (r/h)',
+                        font: { size: 14 }
+                    }
+                },
+                y: {
+                    min: 0,
+                    max: 13,
+                    ticks: { stepSize: 2 },
+                    title: {
+                        display: true,
+                        text: 'Kernel Weight W(r,h)',
+                        font: { size: 14 }
+                    }
+                }
+            },
+            plugins: {
+                legend: { 
+                    display: true,
+                    position: 'top',
+                    labels: {
+                        filter: function(item) {
+                            return item.text !== '';
+                        }
+                    }
+                },
+                title: {
+                    display: true,
+                    text: 'SPH Cubic Spline Kernels vs Dirac Delta Function',
+                    font: { size: 16 }
+                }
+            },
+            elements: {
+                point: { radius: 0 }
+            }
+        }
+    });
+    
+    // Add text annotation for Dirac delta
+    setTimeout(() => {
+        const canvas = document.getElementById('chart');
+        const ctx = canvas.getContext('2d');
+        ctx.fillStyle = 'red';
+        ctx.font = '14px Arial';
+        ctx.textAlign = 'center';
+        ctx.fillText('δ(x)', canvas.width/2, 50);
+        ctx.fillText('(h→0)', canvas.width/2, 65);
+    }, 100);
+</script>
+
+it becomes more obvious to see how an increasingly smaller h pulls the kernel function to a dirac delta identy. Changing the h will later also influence how our simluations behaves. If the h is to small, it will explodes, if it is to big, it will be very lazy, since there will be to much averaging in between partices
+
+Finally we can put it together and rewrite the continous function into a discrete sum:
 
 $$f(\mathbf{x}) \approx \sum_{j} V_j f(\mathbf{x}_j) W(\mathbf{x} - \mathbf{x}_j, h)$$
 
