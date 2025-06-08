@@ -17,7 +17,7 @@ There exist two (and a half) approaches for fluid simulation: the lagrangian par
 
 First, lets think about what charakteristics make a fluid a fluid and especially lets think about water. First of course it can flow freely and will always try to find a postion of lowest energy. Furthermore it is not compressible. So (to an extent) no matter how deep you dive into the ocean, 1 cubic meter of water will always have the same amount of water molecules, no matter hoch high the pressure is. Finally we have some more specific properties like surface tension. 
 
-The fundamental aspect of fluid simulation though is maintaining the incompressibility through time. And while this post will have a few formulas i strive to make it as easy and interesting to understand as possible. And I promise in future things will get more programming centric. The incompressibility can simply be described by $$\frac{D \rho}{D t} = 0 \Leftrightarrow \nabla \cdot v = 0$$. $$\rho$$ denotes the density. The second part implies the same, but we will not use any further. 
+The fundamental aspect of fluid simulation though is maintaining the incompressibility through time. And while this post will have a few formulas i strive to make it as easy and interesting to understand as possible. And I promise in future things will get more programming centric. The incompressibility can simply be described by $\frac{D \rho}{D t} = 0 \Leftrightarrow \nabla \cdot v = 0$. $\rho$ denotes the density. The second part implies the same, but we will not use any further. 
 
 From this we can derive the navier stokes equation:
 $$ \frac{D\mathbf{v}}{Dt}=-\frac{1}{\rho}\nabla p+\nu\nabla^2\mathbf{v}+\frac{\mathbf{f}}{\rho} $$
@@ -39,7 +39,7 @@ $$\delta(x)=\begin{cases}\infty&\mathrm{if~}x=0 \\ 0&\mathrm{otherwise}&\end{cas
 
 $$\int_{-\infty}^{+\infty}\delta(x)dx=1$$
 
-Given a fucntion $$f:\Omega\to\mathbb{R}^n$$ that maps a position vector $$x$$ in the domain $$\Omega \subset \mathbb{R}^3$$ to a scalar or vector vlaue, it can be rewritten using the Dirac delta identiz:
+Given a fucntion $$f:\Omega\to\mathbb{R}^n$$ that maps a position vector $$x$$ in the domain $$\Omega \subset \mathbb{R}^3$$ to a scalar or vector vlaue, it can be rewritten using the Dirac delta identiy:
 
 $$f(x)=\int_\Omega f(x^*)\delta(x-x^*)dx^*$$
 
