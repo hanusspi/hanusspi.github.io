@@ -7,45 +7,45 @@ background: '/img/posts/2023-08-13-Introduction-to-ANS/header.jpg'
 
 # 1. Introduction
 
-In the last post we began exploring the fundamentals of SPH Fluid Simulation. First we introduced the general physical framework of fluid simulation and then began turning it into a more computer friendly system. But all that we have so far is a fluid fluid interaction. Therefor we are now able to spawn some fluid in vacuum and have it behave (not even really reallistically). So the next step will be, to explore how we can compute some coupling between the fluid and solids. Furthermore we explored the first part of the Navier Stokes equation, but have not yet explored viscosity. Last but not least we will take a quick peak at some more effects, that the navier stokes equation does not account for.
+In the last post, we began exploring the fundamentals of SPH Fluid Simulation. First, we introduced the general physical framework of fluid simulation and then began turning it into a more computer-friendly system. But all that we have so far is a fluid-fluid interaction. Therefore, we are now able to spawn some fluid in vacuum and have it behave (not even really realistically). So the next step will be to explore how we can compute some coupling between the fluid and solids. Furthermore, we explored the first part of the Navier-Stokes equation, but have not yet explored viscosity. Last but not least, we will take a quick peek at some more effects that the Navier-Stokes equation does not account for.
 
-# 2. Fluid Solid Coupling
+# 2. Fluid-Solid Coupling
 
-Since we are representing our fluid as discrete particles that are interacting with each other, the intuitive approach is, to simply represent the boundary as particles as well. And exactly that is what we are going to do. 
+Since we are representing our fluid as discrete particles that are interacting with each other, the intuitive approach is to simply represent the boundary as particles as well. And exactly that is what we are going to do.
 
-First we sample the boundary with boundary particles. Those particles need to be treated differently in our simulation, since the are never going to move. Next we need to determine the weight of the boundary particles. Unlike fluid particles, who get all the same weight, we would have to sample the boundary particles all with perfectly equal distance to be able to do this. Since this is not very practial, we simply apply our kernel function and first determine the implied volume of each boundary particle depending on its neighborhood. 
+First, we sample the boundary with boundary particles. Those particles need to be treated differently in our simulation, since they are never going to move. Next, we need to determine the weight of the boundary particles. Unlike fluid particles, who get all the same weight, we would have to sample the boundary particles all with perfectly equal distance to be able to do this. Since this is not very practical, we simply apply our kernel function and first determine the implied volume of each boundary particle depending on its neighborhood.
 
 $$V_i = \frac{m}{\rho_i} = \frac{m}{\sum_k m W_{ik}} = \frac{1}{\sum_k W_{ik}}$$
 
-You migh see a pattern arise here. Most of fluid simulation works by summing up some kernel function over its neighborhood. The advantage of the volume approach is, that it is independent of the mass or density. Now the question is, which density our boundary should have. Maybe one could guess, that it depends on the boundary material, but since we only care about the effect on the fluid, we assume they have the rest denstiy of the fluid. 
+You might see a pattern arise here. Most of fluid simulation works by summing up some kernel function over its neighborhood. The advantage of the volume approach is that it is independent of the mass or density. Now the question is, which density our boundary should have. Maybe one could guess that it depends on the boundary material, but since we only care about the effect on the fluid, we assume they have the rest density of the fluid.
 
 With that in mind, the density of a fluid particle turns into:
 
 $$\rho_i = \sum_j m_j W_{ij} + \rho_0 \sum_k V_k W_{ik}$$
 
-Knowing this, we can apply our previous knowledge for building a fluid simulator. 
+Knowing this, we can apply our previous knowledge for building a fluid simulator.
 
 # 3. Viscosity
 
-Viscosity is defined by a fluids rate/dependent resistance to a chane in shape or to movement of its neighbroing posrtions relative to one another. Atleast by Wikipedia...
+Viscosity is defined by a fluid's rate/dependent resistance to a change in shape or to movement of its neighboring positions relative to one another. At least by Wikipedia...
 
-What this means, is that viscosity describes the internal friction between adjacent layers of fluid. Since we are having particles and the particls velocity we can therefore derive something to simulate viscosity:
+What this means is that viscosity describes the internal friction between adjacent layers of fluid. Since we are having particles and the particle's velocity, we can therefore derive something to simulate viscosity:
 
 $$\mathbf{a}_i^v = \nu \nabla^2 \mathbf{v}_i \approx 2\nu_f \sum_{j \in N_i^f} \frac{m_j}{\rho_j} (\mathbf{v}_i - \mathbf{v}_j) \frac{(\mathbf{x}_i - \mathbf{x}_j)^T \nabla W_{ij}}{|\mathbf{x}_i - \mathbf{x}_j|^2 + 0.01h^2} + 2\nu_b \sum_{k \in N_i^b} V_k \mathbf{v}_i \frac{(\mathbf{x}_i - \mathbf{x}_k)^T \nabla W_{ik}}{|\mathbf{x}_i - \mathbf{x}_k|^2 + 0.01h^2}$$
 
-While this looks huge, mean and complicated, we just need to know a few things. First, we get an acceleration of our fluid particle. The magnitude of the acceleration depends on the velocity differenc of the particle relative to its neighbors or boundary (since the boundary moves, we do not have to substract anything). Furhtermore, we get two parameters. One for the fluid viscosity $$\nu_f$$ and one for the boundary viscosity $$\nu_b$$ with which we can set up the behaviour of our fluid. 
+While this looks huge, mean, and complicated, we just need to know a few things. First, we get an acceleration of our fluid particle. The magnitude of the acceleration depends on the velocity difference of the particle relative to its neighbors or boundary (since the boundary doesn't move, we do not have to subtract anything). Furthermore, we get two parameters. One for the fluid viscosity $$\nu_f$$ and one for the boundary viscosity $$\nu_b$$ with which we can set up the behavior of our fluid.
 
-While one might argue, that especially water is not viscous, we will still apply a small bit of viscosty to ensure numerical stability. This means, by discretization we make a small error every timestep. And this might lead to an increasingly growing error and run away: an explosion (at least visually). And to prevent this behaviour, viscosity is a good dampening mechanic. 
+While one might argue that especially water is not viscous, we will still apply a small bit of viscosity to ensure numerical stability. This means, by discretization we make a small error every timestep. And this might lead to an increasingly growing error and run away: an explosion (at least visually). And to prevent this behavior, viscosity is a good dampening mechanic.
 
 # 4. Surface Tension (Adhesion and Cohesion)
 
-Lastly I want to introduce a simple version of surface tension. If we were to spawn a cube of water in space, in nature the cube would turn into a droplet, since water always strifes to minimize its surface area. This is an effect, that SPH by default does not recreate. The same effect is also responsible for droplet building on surfaces.
+Lastly, I want to introduce a simple version of surface tension. If we were to spawn a cube of water in space, in nature the cube would turn into a droplet, since water always strives to minimize its surface area. This is an effect that SPH by default does not recreate. The same effect is also responsible for droplet building on surfaces.
 
-Therefore we introduce a cohesion force which by applying a different kernel strives to minimye the surface area of the fluid. For simplicity ill just link to the authors of the paper and not intrduce any new formulas.
+Therefore, we introduce a cohesion force which, by applying a different kernel, strives to minimize the surface area of the fluid. For simplicity, I'll just link to the authors of the paper and not introduce any new formulas.
 
-Next we add an adhesion force, which simulates the wetting effect of fluids and the tendency to stick to the boundary. 
+Next, we add an adhesion force, which simulates the wetting effect of fluids and the tendency to stick to the boundary.
 
-Taking a look at cohesion we can see with an increasing cohesion factor we get droplet building.
+Taking a look at cohesion, we can see with an increasing cohesion factor we get droplet building.
 
 <video width="100%" controls>
   <source src="/img/posts/2025-06-13-Fluid-Simulation2/adhesion.mp4" type="video/mp4">
@@ -54,5 +54,4 @@ Taking a look at cohesion we can see with an increasing cohesion factor we get d
 
 # 5. Summary
 
-In this a bit shorter chapter we collected the final puzzle pieces to start building a first fluid simulator. For that we first thought of a way to handle boundaries to create interesting simulations. Then we introduced viscosity as a natural dampening factor and add adhesion and cohesion forces to generate a more natural fluid behavious
-
+In this a bit shorter chapter, we collected the final puzzle pieces to start building a first fluid simulator. For that, we first thought of a way to handle boundaries to create interesting simulations. Then we introduced viscosity as a natural dampening factor and added adhesion and cohesion forces to generate a more natural fluid behavior.
