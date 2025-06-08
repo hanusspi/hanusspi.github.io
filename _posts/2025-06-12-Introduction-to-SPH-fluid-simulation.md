@@ -49,65 +49,39 @@ $$f(\mathbf{x})=\int_\Omega f(\mathbf{x}^*)\delta(\mathbf{x}-\mathbf{x}^*)d\math
 
 $$\approx\int_{D_{\mathbf{x}}}f(\mathbf{x}^*)W(\mathbf{x}-\mathbf{x}^*,h)d\mathbf{x}^*$$
 
-The Dirac delta identity can be rewritten as:
+Our kernel function will have to fullfill a few requirements. As we saw, the dirac delta identity sums up to 1. This must be the case for the kernel function as well. Further more it needs to be symmetric, positive and have a compact condition. This simply means, that it only returns a positive value, as long as we are in a set radius and elsewise we are just 0. For now we will use the cubic spline kernel, which looks like that:
 
-$$f(\mathbf{x}) = \int_{\Omega} f(\mathbf{x}^*) \delta(\mathbf{x} - \mathbf{x}^*) d\mathbf{x}^*$$
-
-which can be approximated using a kernel function:
-
-$$f(\mathbf{x}) \approx \int_{D_{\mathbf{x}}} f(\mathbf{x}^*) W(\mathbf{x} - \mathbf{x}^*, h) d\mathbf{x}^*$$
-
-\frac{D\mathbf{v}}{Dt} &= -\frac{1}{\rho}\nabla p + \nu\nabla^2\mathbf{v} + \frac{\mathbf{f}}{\rho} \\
-\text{where:} \quad &  \\
-\frac{D\mathbf{v}}{Dt} &= \text{material derivative of velocity} \\
--\frac{1}{\rho}\nabla p &= \text{pressure gradient acceleration} \\
-\nu\nabla^2\mathbf{v} &= \text{viscous acceleration} \\
-\frac{\mathbf{f}}{\rho} &= \text{external force acceleration}
-\end{align}$$
-
-### SPH Kernel Approximation (Multi-line)
-$$\begin{align}
-f(\mathbf{x}) &= \int_{\Omega} f(\mathbf{x}^*) \delta(\mathbf{x} - \mathbf{x}^*) \, d\mathbf{x}^* \\
-&\approx \int_{D_{\mathbf{x}}} f(\mathbf{x}^*) W(\mathbf{x} - \mathbf{x}^*, h) \, d\mathbf{x}^* \\
-&\approx \sum_{j} \frac{m_j}{\rho_j} f(\mathbf{x}_j) W(\mathbf{x} - \mathbf{x}_j, h)
-\end{align}$$
-
-### Incompressibility Condition
-$$\begin{align}
-\frac{D\rho}{Dt} &= 0 \\
-\Leftrightarrow \quad \nabla \cdot \mathbf{v} &= 0
-\end{align}$$
-
-### Kernel Function Properties
-$$\begin{align}
-\int_{\Omega} W(\mathbf{x} - \mathbf{x}^*, h) \, d\mathbf{x}^* &= 1 \quad \text{(normalization)} \\
-\lim_{h \to 0} W(\mathbf{x} - \mathbf{x}^*, h) &= \delta(\mathbf{x} - \mathbf{x}^*) \quad \text{(delta function property)} \\
-W(\mathbf{x} - \mathbf{x}^*, h) &= 0 \quad \text{for} \quad |\mathbf{x} - \mathbf{x}^*| > kh \quad \text{(compact support)}
-\end{align}$$
-
-## Single Line Examples
-
-The density at position $\mathbf{x}$ is approximated as:
-$$\rho(\mathbf{x}) = \sum_{j} m_j W(\mathbf{x} - \mathbf{x}_j, h)$$
-
-The gradient of a field $f$ is:
-$$\nabla f(\mathbf{x}) \approx \sum_{j} \frac{m_j}{\rho_j} f(\mathbf{x}_j) \nabla W(\mathbf{x} - \mathbf{x}_j, h)$$
-
-## Advanced Formatting
-
-### Piecewise Functions
-$$W(r, h) = \frac{1}{\pi h^2} \begin{cases}
-1 - \frac{3}{2}q^2 + \frac{3}{4}q^3 & \text{if } 0 \leq q < 1 \\
-\frac{1}{4}(2-q)^3 & \text{if } 1 \leq q < 2 \\
+$$W(q) = \alpha \begin{cases}
+\frac{2}{3} - q^2 + \frac{1}{2}q^3 & \text{if } 0 \leq q < 1 \\
+\frac{1}{6}(2-q)^3 & \text{if } 1 \leq q < 2 \\
 0 & \text{if } q \geq 2
 \end{cases}$$
 
-where $q = \frac{r}{h}$.
+where $q = \frac{\|\mathbf{x}_i - \mathbf{x}_j\|}{h}$ and $\alpha$ is the normalization constant depending on in how many dimensions we run the simulation. Finally we can put it together and rewrite the continous function into a discrete sum:
 
-### Matrix Notation
-$$\begin{align}
-\mathbf{A} = \begin{pmatrix}
-\frac{\partial^2 p}{\partial x^2} & \frac{\partial^2 p}{\partial x \partial y} \\
-\frac{\partial^2 p}{\partial y \partial x} & \frac{\partial^2 p}{\partial y^2}
-\end{pmatrix}
-\end{align}$$
+$$f(\mathbf{x}) \approx \sum_{j} V_j f(\mathbf{x}_j) W(\mathbf{x} - \mathbf{x}_j, h)$$
+
+Now the quantity of f can be simply determined by a sum over its neighborhood in a fixed radius. Doing the neighborhoodsearch in a naiive brute force way is very expensive and scales horably ($$o(n^3)$). But luckily there is some smarter ways to handle this. We will take look into this at a later point, but for the begining we will use a library that does this for us. Using some smart maths, we can now express the density of a particle using:
+
+$$\rho_i = \sum_{j} \frac{m_j}{\rho_j} \rho_j W_{ij} = \sum_{j} m_j W_{ij}$$
+
+With this we did the first big logical step into understanding fluid simulation.
+
+# 4 Equation of State
+
+Knowing the density of all our particles in the system now enables us to enforce the continuity equation. If the particle density is to high, this can be directly translated into a high pressure. Pressure Forces are the forces that counteract high densities. Further more taking the gradient of the density into account, we can determine, in which direction the pressure is forcing our particle to retain constant density. 
+
+A mathematical formulation of this is presented in the equation of state (EOS):
+
+$$p_i = \frac{\kappa \rho_0}{\gamma} \left( \left( \frac{\rho_i}{\rho_0} \right)^{\gamma} - 1 \right)$$
+
+where the pressure $p$ of the particle $i$ is dependent on the pressure difference between the rest density $\rho_0$ which is the natural density of water and therefore for us $1000kg/m^3$ and the actual density of the particle. Further more $\gamma, \kappa$ are stifness parameters. For now we will simply set $\kappa$ to 1 giving us $p_i = \kappa (\rho_i - \rho_0). Formulating it like this shows great similarity to a spring force, just defined as a density deviationt imes a stiffness constant.
+
+While this gives us the pressure, later on we will also need the direction of the pressure. Therefore it is noteworth to quickly talk about the derivative of our kernel and density calculation. Mathematically the derivative keeps the factors the same and just derives the kernel function itself. This derivative does not preserves linear and angular momentum though, since it is not symmetric. To maintain symmetry and satisfy Newton, we therefore rephrase it as:
+
+$$\nabla A_i \approx \rho_i \sum_{j} m_j \left( \frac{A_i}{\rho_i^2} + \frac{A_j}{\rho_j^2} \right) \nabla W_{ij}$$
+
+
+# 5 Summary
+
+With this we arleady did the first steps into understanding the fundamentals of fluid simulation. First we took a look into the general physical principal behind fluids and then derived a way to make it more computable. For the next part we will take a look at a few more building blocks, before we can start building a first fluid simulator.
