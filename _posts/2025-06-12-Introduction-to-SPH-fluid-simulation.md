@@ -49,11 +49,13 @@ $$f(\mathbf{x})=\int_\Omega f(\mathbf{x}^*)\delta(\mathbf{x}-\mathbf{x}^*)d\math
 
 $$\approx\int_{D_{\mathbf{x}}}f(\mathbf{x}^*)W(\mathbf{x}-\mathbf{x}^*,h)d\mathbf{x}^*$$
 
-The kernel approximation becomes:
+The Dirac delta identity can be rewritten as:
 
-$$f(\mathbf{x}) = \int_{\Omega} f(\mathbf{x}^*) \delta(\mathbf{x} - \mathbf{x}^*) \, d\mathbf{x}^*$$
+$$f(\mathbf{x}) = \int_{\Omega} f(\mathbf{x}^*) \delta(\mathbf{x} - \mathbf{x}^*) d\mathbf{x}^*$$
 
-$$\approx \int_{D_{\mathbf{x}}} f(\mathbf{x}^*) W(\mathbf{x} - \mathbf{x}^*, h) \, d\mathbf{x}^*$$
+which can be approximated using a kernel function:
+
+$$f(\mathbf{x}) \approx \int_{D_{\mathbf{x}}} f(\mathbf{x}^*) W(\mathbf{x} - \mathbf{x}^*, h) d\mathbf{x}^*$$
 
 \frac{D\mathbf{v}}{Dt} &= -\frac{1}{\rho}\nabla p + \nu\nabla^2\mathbf{v} + \frac{\mathbf{f}}{\rho} \\
 \text{where:} \quad &  \\
