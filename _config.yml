@@ -25,6 +25,11 @@ plugins:
   - jekyll-latex
 markdown: kramdown
 highlighter: rouge
+kramdown:
+  math_engine: mathjax
+  math_engine_opts:
+    preview: true
+    preview_as_code: false
 # kramdown:
 #    input: GFM
 #    syntax_highlighter: rouge
