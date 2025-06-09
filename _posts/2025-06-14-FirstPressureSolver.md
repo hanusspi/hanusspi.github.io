@@ -14,7 +14,9 @@ There is many ways to implement an SPH Solver, but one of the oldest and simples
 
 Let me start by showing you the general algorithm and then jump into the details and some practically relevant side notes. 
 
-{% highlight python linenos %}
+{% highlight text linenos %}
+// SPH (Smoothed Particle Hydrodynamics) Algorithm
+
 FOR each particle i:
     find_neighbors(i) → neighbors_j
 
@@ -23,13 +25,71 @@ FOR each particle i:
     pressure_i = state_equation(density_i)
 
 FOR each particle i:
-    pressure_force_i = -(mass_i/density_i) * gradient(pressure_i)
-    viscosity_force_i = mass_i * viscosity * laplacian(velocity_i)
-    other_force_i = mass_i * gravity
+    pressure_acceleration_i = -(1/density_i) * gradient(pressure_i)
+    viscosity_acceleration_i = viscosity * laplacian(velocity_i)
+    other_acceleration_i = gravity
     
-    total_force_i = pressure_force_i + viscosity_force_i + other_force_i
+    total_acceleration_i = pressure_force_i + viscosity_force_i + other_force_i
 
 FOR each particle i:
-    velocity_i(t + dt) = velocity_i(t) + dt * total_force_i / mass_i
-    position_i(t + dt) = position_i(t) + dt 
+    velocity_i(t + dt) = velocity_i(t) + dt * total_force_i 
+    position_i(t + dt) = position_i(t) + dt * velocity_i(t + dt)
 {% endhighlight %}
+
+The first step is the neighborhood search. For starters we will be using CompactNSearch to do this for us. This offers a relatively well optimized, fast and accesible way to do the neighborhood search. 
+
+In the next step we need to see, how the current situation looks. Therefore we compute the density for all fluid particles including boundaries as we have discussed in the last post. Finally we can apply the EOS (equation of state) to determine the pressure for each particle.
+
+Knowing the pressure, we can now determine a resulting force. The force is dependent the particle mass, which is static, the density, which we just calculated and the gradient of the pressure. 
+
+$$\mathbf{F}_i^p = -\frac{m_i}{\rho_i} \nabla p_i \approx -\underbrace{\sum_{j \in N_i^f} m_j \left(\frac{p_i}{\rho_i^2} + \frac{p_j}{\rho_j^2}\right) \nabla W_{ij}}_{\text{fluid-fluid interaction}} - \underbrace{\sum_{k \in N_i^b} \rho_0 V_k \frac{p_i}{\rho_i^2} \nabla W_{ik}}_{\text{fluid-solid interaction}}$$
+
+Here we can see the use of the altered derivative to ensure symmetric forces between particles. Dividing the pressure force by the particles mass then gives us an acceleration:
+
+$$\mathbf{a}_i^p = \mathbf{F}_i^p / m_i$$
+
+Combine this with the acceleration due to viscosity:
+
+$$\mathbf{a}_i^v = \nu \nabla^2 \mathbf{v}_i \approx 2\nu_f \sum_{j \in N_i^f} \frac{m_j}{\rho_j} (\mathbf{v}_i - \mathbf{v}_j) \frac{(\mathbf{x}_i - \mathbf{x}_j)^T \nabla W_{ij}}{|\mathbf{x}_i - \mathbf{x}_j|^2 + 0.01h^2} + 2\nu_b \sum_{k \in N_i^b} V_k \mathbf{v}_i \frac{(\mathbf{x}_i - \mathbf{x}_k)^T \nabla W_{ik}}{|\mathbf{x}_i - \mathbf{x}_k|^2 + 0.01h^2}$$
+
+And applying gravity gives us all the resulting accelerations for our particle. 
+
+In the final step we apply the accleration using the Semi Implicit Euler method to update the velocity and finally the position. 
+
+# 3. Discusstion and Specialties
+
+Having looked at the general proccess it is easier to explain the name. What we are doing is looking at the current situation and based on that we derive an update. But we do not know, if the update will improve the situation. After all we could push many particles into one area creating a new pressure hot spot. This use of an explicit solving method makes the weackly compressible in the name. 
+
+To minimze the error we make by doing this, we have to select a very small timestep size. Which size exactly always depends on the dynamics of the simulation and all other parameters. A second factor that limits our timestep size is the boundary handling method. Currently we have a single layer of boundary particles that the fluid particle should never cross or it will be gone for ever. To express and calculate this limitation, we use the CFL-Condition:
+
+$$\Delta t_{CFL} \leq 0.5 \frac{r}{||\mathbf{v}_{max}||}$$
+
+Which we can either use to determine a dynamic timestep size by looking at the fastest particle or which we can use to limit the particle velocities for a fixed timestep size. 
+
+In the previous post we also discussed (at least a bit) an extra model for cohesiona and adhesion. This model gives us forces, that we can simply add to the other Forces in the algorithm and include it that way. 
+
+Lastly we need to discuss an issue with the equation of state. Currently we simply derive a pressure from the density deviation. Furthermore we simulate a single phase liquid, therefore we are not having any surrounding air particles or something like this. This means, that especially on the surface and in splashes we will see negative pressures. These pressures would suck up other fluid particles and build clumps. While this might sound like surface tension, it is a very much unwanted and bad looking effect. Therefore we simply modify our EOS: $$p_i = \max(0, \kappa (\rho_i - \rho_0))$$ to ignore negative pressures and only handle postive pressures.
+
+# 4. Turning it into code
+
+Having an algorithm and having a running simulator are two very different pairs of shoes. Therefore i want to take a few lines to talk about the actual implementation and some potential error sources. The full code for this project is available in ......... 
+
+The procect is coded in C++ as most libraries in this domain are available in C++. Furthermore, it offers the best compromise between beeing fast and still readable enough, to be well understood and fast programmed.
+
+First of all, we need to find a way to define boundaries. For this I used the tinyobject loader and object files, which can be created in blender. Next we need a method to sample the particles. Here I got some good code from a class at my Uni. As did I get a few more helping functions. Afther we have loaded our boundary, and populated it with boundary particles, we apply a first neighborhood search and determine the boundary weights and volumes. 
+
+Next we need to define our fluid particles. For simplicity we will start out with sampling a cube with a regular grid and make every grid cell corner a particle. While from a readability stand point it might me nicer to create now a struct, that holds all the particles properties, like its mass, density, position and acceleration. But having a vector of structs is fairly slow compared to having a struct of vectors (or just many vectors). Vectors being like lists, not the mathematical thing.
+
+In the next step we can implement a simulation loop that and update our particle positions. Sadly we do not really have any way of seeing the results right now. Of course there are many ways, for visualizaation, like adding a graphics api and showing the results directly. 
+
+One thing you will note though, the simulation runs very slow. Therefore for now we will simply export the particles into .vtk files. That is file format originally created for paraview, but also useable in blender using: .
+
+Now we can run our simulation, drink a cup of coffee, maybe have full meal (or two) and then we will look at our results.
+
+# 5. Results
+
+I have collected a few videos I rendered using my implementation of WCSPH. As we can see, the particles look like fluid, but non the less, we still have the look of a toddler in the ball pit and not really the look of water.
+
+# 6. Summary
+
+Today we took a big step and implemented the first pressure solver. It still is relativley basic, but it works. Right now we still face to big problems. First, a simulation takes very long, second it does not look like water. Those will be things, that we hopefully can change in the next posts.
