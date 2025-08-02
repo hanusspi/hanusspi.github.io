@@ -73,7 +73,7 @@ Lastly we need to discuss an issue with the equation of state. Currently we simp
 
 # 4. Turning it into code
 
-Having an algorithm and having a running simulator are two very different pairs of shoes. Therefore i want to take a few lines to talk about the actual implementation and some potential error sources. The full code for this project is available in ......... 
+Having an algorithm and having a running simulator are two very different pairs of shoes. Therefore i want to take a few lines to talk about the actual implementation and some potential error sources. The full code for this project is available [here: https://github.com/hanusspi/BasicPressureSolverLab](https://github.com/hanusspi/BasicPressureSolverLab)
 
 The procect is coded in C++ as most libraries in this domain are available in C++. Furthermore, it offers the best compromise between beeing fast and still readable enough, to be well understood and fast programmed.
 
