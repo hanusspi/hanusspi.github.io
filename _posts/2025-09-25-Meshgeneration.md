@@ -399,7 +399,7 @@ Depending on the rendering settings in Blender the look of the fluid can be vari
 
 # 5. Summary
 In this post we started out by defining a voxel grid with many indices turning it into the marching cube algorithm [LC87]. Finally we managed to apply it to a particle based fluid simulation turning it into a real fluid.
-The code can be found under [here: https://github.com/hanusspi/BasicPressureSolverLab](https://github.com/hanusspi/BasicPressureSolverLab), where the mesh gets generated as a vtk and can be imported into blender using the same workflow as for the particles in the previous blog post.
+The code can be found under [https://github.com/hanusspi/BasicPressureSolverLab](https://github.com/hanusspi/BasicPressureSolverLab), where the mesh gets generated as a vtk and can be imported into blender using the same workflow as for the particles in the previous blog post.
 
 # References
 
