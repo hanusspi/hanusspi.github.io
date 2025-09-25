@@ -8,7 +8,7 @@ background: '/img/posts/2023-08-13-Introduction-to-ANS/header.jpg'
 In the last post we created our first pressure solver and got some pretty good results. Real fluids though do not really look like a bunch of spheres, but have a closed fluid surface. To resolve this issue, we define a function that can tell us how far a point in space is from the fluid surface. To do this we will define a signed distance function, that works with the lagrangian fluid simulation. Furthermore we need a strategy to create points, for which we can sample the distance to the surface and turn those points into a grid. And this is what we will start with.
 
 # 2. Marching Cubes
-To start off with marching cubes we overlay the simulation domain with a voxel grid. The length of a voxel we will denote with $$l$$. Next we sample some function, in most cases a signed distance field (sdf) $$\Phi$$ at each corner point $$x_i$$ of each voxel.
+To start off with marching cubes algorighm [LC87] we overlay the simulation domain with a voxel grid. The length of a voxel we will denote with $$l$$. Next we sample some function, in most cases a signed distance field (sdf) $$\Phi$$ at each corner point $$x_i$$ of each voxel.
 
 <iframe srcdoc='<!DOCTYPE html>
 <html lang="en">
@@ -353,7 +353,11 @@ With this information we know if a vertex is inside or outside of the surface. T
 
 Therefore next we will iterate over all edges and check if they intersect the surface, i.e. if the sign between the vertices making up the edge changes. If we have a sign change, we calculate an edge weight by linear interpolation giving us the intersection point. This gives us a solid guess of where the actual surface could be. It is important that we store these points in relation to the edge they belong to. Since our surface is going to have a lot fewer points than we have voxels, it is sensible to store them in a map. 
 
-![Imagetext](/img/posts/2025-09-25-Meshgeneration/MarchingCubesEdit.svg.png)
+  <figure style="text-align: center;">
+  <img src="/img/posts/2025-09-25-Meshgeneration/MarchingCubesEdit.svg.png" alt="Marching Cubes visualization"
+  style="max-width: 80%;">
+  <figcaption style="font-style: italic; color: #666; margin-top: 5px;">Source: Wikipedia</figcaption>
+  </figure>
 
 In the last step we need to append the vertex data with geometric connectivity. For this a marching cubes table exists, that we can use. As visible in the image above, the marching cube table tells us, based on which edges experiencing a sign change, which vertices to connect. And for this to work properly, all the previous hassle with indexing was required. 
 
@@ -361,11 +365,14 @@ Lastly, to get a smooth mesh, we do not just need to have vertices and connectiv
 
 Applying this for an object with a known signed distance function, like a torus yields this result:
 
-![Imagetext](/img/posts/2025-09-25-Meshgeneration/torus.svg.png)
+<figure style="text-align: center;">
+<img src="/img/posts/2025-09-25-Meshgeneration/torus.svg.png" alt="Torus generated using marching cubes" style="max-width: 80%;">
+<figcaption style="font-style: italic; color: #666; margin-top: 5px;">Torus mesh generated using the marching cubes algorithm</figcaption>
+</figure>
 
 # 3. Fluid Surface Reconstruction
 
-To make marching cubes work we therefore need a $$\Phi$$ that we can sample. While for primitive shapes, like a torus, sphere or square these are analytically defined, for our fluid they are not. Therefore we need a function that is close to 1, if it is inside the fluid and 0 or even negative if it is outside of the fluid. Applying some fundamentals of the SPH idea and using the method how we determine the value of quantites in SPH (as discusses in the last posts) gives us
+To make marching cubes work we therefore need a $$\Phi$$ that we can sample. While for primitive shapes, like a torus, sphere or square these are analytically defined, for our fluid they are not. Therefore we need a function that is close to 1, if it is inside the fluid and 0 or even negative if it is outside of the fluid. Applying some fundamentals of the SPH idea and using the method how we determine the value of quantites in SPH (as discusses in the last posts) gives us [BJ25]
 
 $$\Phi(\mathbf{x})=-c+\sum_{j\in\mathcal{N}(\mathbf{x})}\frac{1}{\rho_j}W(\mathbf{x}-\mathbf{x}_j,h),$$
 
@@ -391,5 +398,10 @@ Applying marching cubes and the newly defined sdf gives us this lovely result fo
 Depending on the rendering settings in Blender the look of the fluid can be varied even further.
 
 # 5. Summary
-In this post we started out by defining a voxel grid with many indices turning it into the marching cube algorithm. Finally we managed to apply it to a particle based fluid simulation turning it into a real fluid. 
-The code can be found under [here: https://github.com/hanusspi/BasicPressureSolverLab](https://github.com/hanusspi/BasicPressureSolverLab), where the mesh gets generated as a vtk and can be imported into blender using the same workflow as for the particles in the previous blog post. 
+In this post we started out by defining a voxel grid with many indices turning it into the marching cube algorithm [LC87]. Finally we managed to apply it to a particle based fluid simulation turning it into a real fluid.
+The code can be found under [here: https://github.com/hanusspi/BasicPressureSolverLab](https://github.com/hanusspi/BasicPressureSolverLab), where the mesh gets generated as a vtk and can be imported into blender using the same workflow as for the particles in the previous blog post.
+
+# References
+
+[LC87] W.E. Lorensen and H.E. Cline. Marching cubes: A high resolution 3d surface construction algorithm. ACM Computer Graphics, 21(4):163–169, 1987.
+[BJ25] Prof. Dr. Jan Bender, M.Sc. Timna B¨ottcher, M.Sc. Jos´e Fern´andez, M.Sc. Lukas Westhofen: Fluid Simulation in Computer Graphics
