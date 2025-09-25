@@ -347,7 +347,7 @@ where dir is 0,1,2 for x,y,z.
 
 For the full implementation we will have to handle some literal edge cases, because vertices on the outer side of the grid do not have edges in all directions.
 
-The nice thing about those functions is, that they are bijective, therefore from a vertex id we can backtrack to its integer and finally world coordinates. Given the world coordinate x we can sample $$\phi(x)$$ and get for the vertex i $$\Phi_i = Phi(x_i)$$.
+The nice thing about those functions is, that they are bijective, therefore from a vertex id we can backtrack to its integer and finally world coordinates. Given the world coordinate x we can sample $$\phi(x)$$ and get for the vertex i $$\Phi_i = \Phi(x_i)$$.
 
 With this information we know if a vertex is inside or outside of the surface. This already gives us some basic information, but not a mesh yet. 
 
@@ -366,7 +366,7 @@ Lastly, to get a smooth mesh, we do not just need to have vertices and connectiv
 Applying this for an object with a known signed distance function, like a torus yields this result:
 
 <figure style="text-align: center;">
-<img src="/img/posts/2025-09-25-Meshgeneration/torus.svg.png" alt="Torus generated using marching cubes" style="max-width: 80%;">
+<img src="/img/posts/2025-09-25-Meshgeneration/torus.png" alt="Torus generated using marching cubes" style="max-width: 80%;">
 <figcaption style="font-style: italic; color: #666; margin-top: 5px;">Torus mesh generated using the marching cubes algorithm</figcaption>
 </figure>
 
