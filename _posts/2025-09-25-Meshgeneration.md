@@ -109,6 +109,7 @@ To start off with marching cubes algorighm [LC87] we overlay the simulation doma
 
         let animationStep = 0;
         let animationFrame = null;
+        let isAnimating = false;
 
         // Simple sphere SDF
         function sphereSDF(x, y) {
@@ -271,21 +272,19 @@ To start off with marching cubes algorighm [LC87] we overlay the simulation doma
             }
         }
 
-        function animate() {
+        function drawStep() {
             drawBackground();
 
             switch (animationStep) {
                 case 0:
                     stepInfo.textContent = "Step 1: Show the shape (sphere) we want to trace";
                     drawSphere();
-                    setTimeout(() => { animationStep++; animate(); }, 2000);
                     break;
 
                 case 1:
                     stepInfo.textContent = "Step 2: Overlay a grid";
                     drawSphere();
                     drawGrid();
-                    setTimeout(() => { animationStep++; animate(); }, 2000);
                     break;
 
                 case 2:
@@ -293,7 +292,6 @@ To start off with marching cubes algorighm [LC87] we overlay the simulation doma
                     drawSphere();
                     drawGrid();
                     drawSDFValues();
-                    setTimeout(() => { animationStep++; animate(); }, 3000);
                     break;
 
                 case 3:
@@ -301,7 +299,6 @@ To start off with marching cubes algorighm [LC87] we overlay the simulation doma
                     drawGrid();
                     drawSDFValues();
                     drawInterpolatedPoints();
-                    setTimeout(() => { animationStep++; animate(); }, 3000);
                     break;
 
                 case 4:
@@ -314,15 +311,48 @@ To start off with marching cubes algorighm [LC87] we overlay the simulation doma
             }
         }
 
+        function animate() {
+            if (!isAnimating) return;
+
+            drawStep();
+
+            if (animationStep < 4) {
+                setTimeout(() => {
+                    animationStep++;
+                    animate();
+                }, animationStep === 0 ? 2000 : animationStep < 2 ? 2000 : 3000);
+            } else {
+                isAnimating = false;
+            }
+        }
+
         function startAnimation() {
             animationStep = 0;
+            isAnimating = true;
             animate();
+        }
+
+        function stepForward() {
+            isAnimating = false;
+            if (animationStep < 4) {
+                animationStep++;
+            }
+            drawStep();
+        }
+
+        function stepBackward() {
+            isAnimating = false;
+            if (animationStep > 0) {
+                animationStep--;
+            }
+            drawStep();
         }
 
         function reset() {
             animationStep = 0;
+            isAnimating = false;
             drawBackground();
-            stepInfo.textContent = "Click \"Start Animation\" to see how marching squares works!";
+            stepInfo.textContent = "Click \"Start Animation\" to see how marching squares works! Or use \"Next Step\" for manual control.";
         }
 
         // Initialize
