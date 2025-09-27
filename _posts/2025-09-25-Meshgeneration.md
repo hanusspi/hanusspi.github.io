@@ -78,6 +78,8 @@ To start off with marching cubes algorighm [LC87] we overlay the simulation doma
 
     <div class="controls">
         <button onclick="startAnimation()">Start Animation</button>
+        <button onclick="stepForward()">Next Step</button>
+        <button onclick="stepBackward()">Previous Step</button>
         <button onclick="reset()">Reset</button>
     </div>
 

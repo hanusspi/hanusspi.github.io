@@ -41,7 +41,7 @@ Since we have two nested for loops both with length `particles.size()` we have a
 A major component of accelerating the search is the use of spatial acceleration data structures. For one we could add a voxel grid to our domain with a voxel size of the particle radius. Now we denote which particle lives in which voxel cell. If we now want to know which particles might have a collision with particle a, we simply in 2D look at the cell that particle a is in and the 8 surrounding cells. For the 3D case we then have to search 27 cells. Therefore for each particle we have to only look at a fixed amount of cells. This approach is considered a dense grid representation. Let's take a look at an example:
 
   <figure style="text-align: center;">
-  <img src="\img\posts\2025-09-27-SpatialHashing\HashingDenseGrid.png" alt="Dense Hash Grid"
+  <img src="\img\posts\2025-09-27-SpatialHashing\HashingDenseGrid.png" alt="Sparse Hash Grid"
   style="max-width: 80%;">
   <figcaption style="font-style: italic; color: #666; margin-top: 5px;">Dense Hash Grid</figcaption>
   </figure>
