@@ -37,14 +37,18 @@ Exploration of CDF methods for incompressible flow. For easiest GPU implementati
 
 Direct results of the solver:
 
-  <figure style="text-align: center;">
-  <img src="img\projects\lbm\KarmanVerti.mp4" alt="Sparse Hash Grid"
-  style="max-width: 80%;">
-  <figcaption style="font-style: italic; color: #666; margin-top: 5px;">Lid driven cavity, with colors indicating flow direction</figcaption>
-  </figure>
+<video width="100%" controls>
+  <source src="img\projects\lbm\LidDrivenCavi.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
 
-  <figure style="text-align: center;">
-  <img src="img\projects\lbm\LidDrivenCavi.mp4" alt="Sparse Hash Grid"
-  style="max-width: 80%;">
-  <figcaption style="font-style: italic; color: #666; margin-top: 5px;">Flow over a sphere creating theKármán vortex street</figcaption>
-  </figure>
+**Lid driven cavity, with colors indicating flow direction**
+
+
+<video width="100%" controls>
+  <source src="img\projects\lbm\KarmanVerti.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+
+**Flow over a sphere creating theKármán vortex street**
+

@@ -38,16 +38,17 @@ Implementation of a full SPH pressuer solver, using WCSPH and PBF, as well as an
 
 Renders of the results (generated using Blender):
 
-  <figure style="text-align: center;">
-  <img src="img\posts\2025-09-25-Meshgeneration\DamBreak.mp4" alt="Sparse Hash Grid"
-  style="max-width: 80%;">
-  <figcaption style="font-style: italic; color: #666; margin-top: 5px;">Single Dam Break Scene</figcaption>
-  </figure>
 
-  <figure style="text-align: center;">
-  <img src="img\posts\2025-06-13-Fluid-Simulation2\adhesion.mp4" alt="Sparse Hash Grid"
-  style="max-width: 80%;">
-  <figcaption style="font-style: italic; color: #666; margin-top: 5px;">Effects of Adhesion and Cohesion</figcaption>
-  </figure>
+  <video width="60%" controls>
+  <source src="\img\posts\2025-09-25-Meshgeneration\DamBreak.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+**Single Dam Break Scene**
+<video width="100%" controls>
+  <source src="\img\posts\2025-06-13-Fluid-Simulation2\adhesion.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+**Effects of Adhesion and Cohesion**
+
 
 
