@@ -37,8 +37,8 @@ Exploration of CDF methods for incompressible flow. For easiest GPU implementati
 
 Direct results of the solver:
 
-<video width="100%" controls>
-  <source src="img\projects\lbm\LidDrivenCavi.mp4" type="video/mp4">
+<video width="60%" controls>
+  <source src="/img/projects/lbm/LidDrivenCavi.mp4" type="video/mp4">
   Your browser does not support the video tag.
 </video>
 
@@ -46,9 +46,9 @@ Direct results of the solver:
 
 
 <video width="100%" controls>
-  <source src="img\projects\lbm\KarmanVerti.mp4" type="video/mp4">
+  <source src="/img/projects/lbm/KarmanVerti.mp4" type="video/mp4">
   Your browser does not support the video tag.
 </video>
 
-**Flow over a sphere creating theKármán vortex street**
+**Flow over a sphere creating the Kármán vortex street**
 
