@@ -1,0 +1,80 @@
+---
+layout: default
+---
+
+<!-- Page Header -->
+{% if page.image %}
+<header class="masthead" style="background-image: url('{{ page.image }}')">
+{% elsif page.background %}
+<header class="masthead" style="background-image: url('{{ page.background }}')">
+{% else %}
+<header class="masthead">
+{% endif %}
+  <div class="overlay"></div>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+        <div class="post-heading">
+          <h1>{{ page.title }}</h1>
+          {% if page.subtitle %}
+          <h2 class="subheading">{{ page.subtitle }}</h2>
+          {% endif %}
+          <span class="meta">
+            {% if page.date %}
+            {{ page.date | date: '%B %Y' }}
+            {% endif %}
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- Main Content -->
+<div class="container">
+  <div class="row">
+    <div class="col-lg-8 col-md-10 mx-auto">
+
+      <!-- Tech Stack -->
+      {% if page.tech_stack %}
+      <div class="mb-4">
+        <h5>Technologies Used</h5>
+        <div>
+          {% for tech in page.tech_stack %}
+            <span class="badge badge-primary mr-1 mb-1">{{ tech }}</span>
+          {% endfor %}
+        </div>
+      </div>
+      {% endif %}
+
+      <!-- Project Links -->
+      <div class="mb-4">
+        {% if page.github %}
+        <a href="{{ page.github }}" class="btn btn-outline-primary mr-2" target="_blank">
+          <i class="fab fa-github"></i> View on GitHub
+        </a>
+        {% endif %}
+        {% if page.demo %}
+        <a href="{{ page.demo }}" class="btn btn-outline-success" target="_blank">
+          <i class="fas fa-external-link-alt"></i> Live Demo
+        </a>
+        {% endif %}
+      </div>
+
+      <hr class="mb-4">
+
+      <!-- Project Description -->
+      {{ content }}
+
+      <hr>
+
+      <!-- Navigation -->
+      <div class="clearfix">
+        <a class="btn btn-primary float-left" href="{{ '/projects' | relative_url }}">
+          &larr; Back to Projects
+        </a>
+      </div>
+
+    </div>
+  </div>
+</div>

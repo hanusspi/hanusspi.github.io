@@ -1,0 +1,21 @@
+programming_languages:
+  - Python
+  - C/C++
+  - Java
+  - CUDA
+  - SQL
+
+frameworks:
+  - Jekyll
+  - Bootstrap
+  - NumPy/SciPy
+  - TensorFlow
+  - PyTorch
+
+specializations:
+  - Computer Graphics
+  - GPU Programming
+  - Data Structures & Algorithms
+  - Machine Learning
+  - Physics Simulations
+

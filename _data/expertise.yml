@@ -1,0 +1,11 @@
+- title: "Computer Graphics & Simulation"
+  icon: "fas fa-cube"
+  description: "SPH fluid simulation, spatial hashing, particle systems, mesh generation"
+
+- title: "Data Compression Algorithms"
+  icon: "fas fa-compress"
+  description: "ANS entropy coding, GPU parallelization, compression optimization"
+
+- title: "Statistical Computing"
+  icon: "fas fa-chart-line"
+  description: "Time series analysis, financial risk metrics, data visualization, reinforcement learning"

@@ -1,0 +1,30 @@
+education:
+  - degree: "Master of Computer Science (in progress)"
+    institution: "RWTH Aachen University"
+    period: "2024 - Present"
+    thesis: "Upsampling of Lagrangian Particle Simulations"
+
+  - degree: "Bachelor of Computer Science"
+    institution: "Hochschule Coburg"
+    period: "2020 - 2023"
+    thesis: "ANS Entropy Coding and GPU Parallelization"
+
+  - degree: "Wirtschaftswissenschaften B.Sc."
+    institution: "Julius-Maximilians-Universität Würzburg"
+    period: "2017 - 2020"
+    thesis: "Empirical Analysis of Portfolio Hedging Strategies"
+
+  - degree: "Abitur"
+    institution: "Deutschhaus Gymnasium Würzburg"
+    period: "2009 - 2017"
+
+experience:
+    - title: "Risk Management Intern"
+      company: "EOS Holding GmbH"
+      period: "April 2020"
+      description: "Data analysis and visualization of financial risk metrics"
+
+    - title: "IT Intern (Internal IT Department)"
+      company: "CREALOGIX AG"
+      period: "October 2020 - Februrary 2021"
+      description: "Network tracking and visualization"

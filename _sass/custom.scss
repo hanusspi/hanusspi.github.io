@@ -1,0 +1,49 @@
+// Custom styles for personal website
+
+// Landing page
+.masthead-landing .site-heading {
+  padding: 150px 0 100px;
+
+  @media only screen and (min-width: 768px) {
+    padding: 180px 0 120px;
+  }
+}
+
+// Intro section
+.intro-section {
+  margin: 40px 0;
+
+  img {
+    border: 4px solid #fff;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  }
+}
+
+// Cards
+.card {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.15) !important;
+  }
+}
+
+// Resume timeline
+.resume-item {
+  h5 {
+    color: #0085A1;
+  }
+}
+
+// CTA buttons spacing
+.btn-lg {
+  margin: 0.5rem;
+}
+
+// Section headings
+.section-heading {
+  font-weight: 800;
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}

@@ -1,0 +1,54 @@
+---
+layout: page
+title: Resume
+description: Skills, education, and experience
+background: 'https://via.placeholder.com/1900x1200/4A4A4A/FFFFFF?text=Resume'
+---
+
+<section class="mb-5">
+  <h2 class="section-heading">Education</h2>
+  {% for item in site.data.resume.education %}
+    {% include resume-section.html item=item %}
+  {% endfor %}
+</section>
+
+<section class="mb-5">
+  <h2 class="section-heading">Skills</h2>
+  <div class="row">
+    <div class="col-md-4">
+      <h5>Programming Languages</h5>
+      <ul>
+        {% for skill in site.data.skills.programming_languages %}
+        <li>{{ skill }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+    <div class="col-md-4">
+      <h5>Frameworks & Tools</h5>
+      <ul>
+        {% for framework in site.data.skills.frameworks %}
+        <li>{{ framework }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+    <div class="col-md-4">
+      <h5>Specializations</h5>
+      {% for spec in site.data.skills.specializations %}
+      <span class="badge badge-primary mr-1 mb-1">{{ spec }}</span>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% if site.data.resume.experience.size > 0 %}
+<section class="mb-5">
+  <h2 class="section-heading">Experience</h2>
+  {% for item in site.data.resume.experience %}
+    {% include resume-section.html item=item %}
+  {% endfor %}
+</section>
+{% endif %}
+
+<section class="text-center mt-5">
+  <a href="{{ '/contact' | relative_url }}" class="btn btn-primary btn-lg">Get in Touch</a>
+</section>

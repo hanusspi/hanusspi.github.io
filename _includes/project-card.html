@@ -1,0 +1,33 @@
+<div class="card h-100 shadow-sm">
+
+  <div class="card-body">
+    <a href="{{ include.project.url | relative_url }}" class="text-decoration-none">
+      <h5 class="card-title text-dark">{{ include.project.title }}</h5>
+    </a>
+    <p class="card-text text-muted">{{ include.project.content | strip_html | truncatewords: 25 }}</p>
+
+    {% if include.project.tech_stack %}
+    <div class="mb-2">
+      {% for tech in include.project.tech_stack %}
+        <span class="badge badge-secondary">{{ tech }}</span>
+      {% endfor %}
+    </div>
+    {% endif %}
+
+    <div class="mt-3">
+      <a href="{{ include.project.url | relative_url }}" class="btn btn-sm btn-primary">
+        View Details
+      </a>
+      {% if include.project.github %}
+      <a href="{{ include.project.github }}" class="btn btn-sm btn-outline-primary" target="_blank" onclick="event.stopPropagation()">
+        <i class="fab fa-github"></i>
+      </a>
+      {% endif %}
+      {% if include.project.demo %}
+      <a href="{{ include.project.demo }}" class="btn btn-sm btn-outline-success" target="_blank" onclick="event.stopPropagation()">
+        <i class="fas fa-external-link-alt"></i>
+      </a>
+      {% endif %}
+    </div>
+  </div>
+</div>

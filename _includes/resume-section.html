@@ -1,0 +1,13 @@
+<div class="resume-item mb-4 pb-3 border-bottom">
+  <div class="d-flex justify-content-between flex-wrap">
+    <h5 class="mb-0">{{ include.item.title | default: include.item.degree }}</h5>
+    <span class="text-muted">{{ include.item.period }}</span>
+  </div>
+  <h6 class="text-muted">{{ include.item.company | default: include.item.institution }}</h6>
+  {% if include.item.description %}
+  <p>{{ include.item.description }}</p>
+  {% endif %}
+  {% if include.item.thesis %}
+  <p class="font-italic">Thesis: {{ include.item.thesis }}</p>
+  {% endif %}
+</div>

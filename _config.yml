@@ -1,15 +1,15 @@
-title:              My Blog
+title:              Hans Nusspickel
 email:              f/mwkdrdgo
-description:        A Blog over my it interests
+description:        Computer Science Student | Graphics & Simulation Enthusiast
 author:             Hans Nusspickel
 # baseurl:            "/startbootstrap-clean-blog-jekyll"
 url:                "https://hanusspi.github.io"
 
 # Social Profiles
 # twitter_username:   SBootstrap
-# github_username:    StartBootstrap
+github_username:    hanusspi
 # facebook_username:  StartBootstrap
-# instagram_username:  
+# instagram_username:
 # linkedin_username:
 
 # Add your google-analytics ID here to activate google analytics
@@ -17,12 +17,21 @@ url:                "https://hanusspi.github.io"
 
 # Build settings
 paginate:           5
-paginate_path:      "/posts/page:num/"
+paginate_path:      "/blog/page:num/"
+
+# Collections
+collections:
+  projects:
+    output: true
+    permalink: /projects/:title/
+    sort_by: date
+
 plugins:
   - jekyll-feed
   - jekyll-paginate
   - jekyll-sitemap ## Uncomment this line to silently generate a sitemaps.org compliant sitemap for your Jekyll site
-  - jekyll-latex
+  # - jekyll-latex  # Temporarily disabled locally - GitHub Pages will enable it
+  - jekyll-redirect-from
 markdown: kramdown
 highlighter: rouge
 kramdown:

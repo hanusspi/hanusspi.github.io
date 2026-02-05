@@ -1,0 +1,58 @@
+---
+layout: default
+---
+
+<!-- Page Header -->
+{% if page.background %}
+<header class="masthead masthead-landing" style="background-image: url('{{ page.background | prepend: site.baseurl | replace: '//', '/' }}')">
+{% else %}
+<header class="masthead masthead-landing">
+{% endif %}
+  <div class="overlay"></div>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+        <div class="site-heading">
+          <h1>{{ site.author }}</h1>
+          <span class="subheading">{{ site.description }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- Intro Section -->
+<div class="container">
+  <div class="row">
+    <div class="col-lg-8 col-md-10 mx-auto">
+      {% include intro-hero.html %}
+    </div>
+  </div>
+</div>
+
+<!-- Expertise Section -->
+<div class="container mb-5">
+  <div class="row">
+    <div class="col-lg-10 mx-auto">
+      <h2 class="section-heading text-center mb-4">Expertise</h2>
+      <div class="row">
+        {% for item in site.data.expertise %}
+          <div class="col-md-4 mb-4">
+            {% include expertise-card.html item=item %}
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CTA Section -->
+<div class="container mb-5">
+  <div class="row">
+    <div class="col-lg-8 col-md-10 mx-auto text-center">
+      <a href="{{ '/projects' | relative_url }}" class="btn btn-primary btn-lg">View Projects</a>
+      <a href="{{ '/blog' | relative_url }}" class="btn btn-secondary btn-lg">Read Blog</a>
+      <a href="{{ '/resume' | relative_url }}" class="btn btn-outline-primary btn-lg">View Resume</a>
+    </div>
+  </div>
+</div>
