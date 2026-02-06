@@ -6,7 +6,7 @@ date: 2024-03-20
 tech_stack: [C++, OpenGl, Cuda]
 github: https://github.com/hanusspi/LatticeBoltzman
 demo: null
-image: https://via.placeholder.com/600x300/32CD32/FFFFFF?text=Project+3
+image: '/img/LBM.png'
 featured: false
 ---
 

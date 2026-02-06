@@ -6,7 +6,7 @@ date: 2025-01-01
 tech_stack: [Cuda, C++]
 github: https://github.com/hanusspi/Massively-Parallelized-ANS-Entropy-Encoder
 demo: null
-image: https://via.placeholder.com/600x300/0085A1/FFFFFF?text=Project+1
+image: '/img/Bubble.jpg'
 featured: true
 ---
 
@@ -15,8 +15,10 @@ The project is a rework of my Bachelorthesis, turning the popular, but inherentl
 
 ## Key Features
 
-- **Feature 1**: Cuda implementation of parallized ANS
-- **Feature 2**: Excessive testing framework for time and compressino performance
+- Cuda implementation of parallized ANS
+- Excessive testing framework for time and compressino performance
+- 20x Speedup to sequential operations, while maintaining high compression efficiency
+
 
 ## Technical Implementation
 

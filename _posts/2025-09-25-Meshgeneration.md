@@ -2,7 +2,7 @@
 layout: post
 title: "Turning Particles into a Fluid"
 subtitle: "Marching Cubes and Surface Reconstruction."
-background: '/img/posts/2023-08-13-Introduction-to-ANS/header.jpg'
+background: '/img/Torus.png'
 ---
 # 1. Introduction
 In the last post we created our first pressure solver and got some pretty good results. Real fluids though do not really look like a bunch of spheres, but have a closed fluid surface. To resolve this issue, we define a function that can tell us how far a point in space is from the fluid surface. To do this we will define a signed distance function, that works with the lagrangian fluid simulation. Furthermore we need a strategy to create points, for which we can sample the distance to the surface and turn those points into a grid. And this is what we will start with.

@@ -6,7 +6,7 @@ date: 2024-06-15
 tech_stack: [C++, VTK, CompactNSearch]
 github: https://github.com/hanusspi/BasicPressureSolverLab
 demo: null
-image: https://via.placeholder.com/600x300/1E90FF/FFFFFF?text=Project+2
+image: '/img/DamBreak.png'
 featured: true
 ---
 
